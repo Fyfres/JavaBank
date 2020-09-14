@@ -25,15 +25,32 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CDA-lesson/Projects/workspace" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Utilisateur\Documents\GitHub\JavaBank\src\fyfrel\bank\misc\img" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="fyfrel" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Utilisateur\Documents\GitHub\JavaBank\src" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Index" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Index" />
+      <module name="JavaBank" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Index" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -51,13 +68,33 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="530" y="279" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1599862654463" />
-    <state x="574" y="161" key="#com.intellij.ide.util.MemberChooser" timestamp="1599860056849">
+    <state x="574" y="161" key="#com.intellij.ide.util.MemberChooser" timestamp="1600065126349">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="574" y="161" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1599860056849" />
+    <state x="574" y="161" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1600065126349" />
     <state x="566" y="384" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1599856554334">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="566" y="384" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1599856554334" />
+    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1600066113825">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="549" y="187" key="FileChooserDialogImpl/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1600066113825" />
+    <state width="1491" height="103" key="GridCell.Tab.0.bottom" timestamp="1600072394419">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1491" height="103" key="GridCell.Tab.0.bottom/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1600072394419" />
+    <state width="1491" height="103" key="GridCell.Tab.0.center" timestamp="1600072394418">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1491" height="103" key="GridCell.Tab.0.center/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1600072394418" />
+    <state width="1491" height="103" key="GridCell.Tab.0.left" timestamp="1600072394418">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1491" height="103" key="GridCell.Tab.0.left/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1600072394418" />
+    <state width="1491" height="103" key="GridCell.Tab.0.right" timestamp="1600072394418">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1491" height="103" key="GridCell.Tab.0.right/-1920.0.1536.864/0.0.1536.864@0.0.1536.864" timestamp="1600072394418" />
   </component>
 </project>

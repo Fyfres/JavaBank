@@ -44,6 +44,12 @@ public abstract class Account {
         this.allTransactions = allTransactions;
     }
 
+    /**
+     * Constructor
+     * @param owner User, that will be used as the owner
+     * @param accountType String, that is given by the class that extends Account in their own constructor
+     * @param content double, Amount given at the start of the Account
+     */
     public Account(User owner, String accountType, double content) {
         this.owner = owner;
         this.accountType = accountType;
@@ -53,7 +59,7 @@ public abstract class Account {
 
     /**
      * Auto-Increment of AccountNumber
-     * And add the account to the Bank list and it's User list
+     * And add the account to the Bank list and it's owner list of Account
      */
     protected void addToList() {
         Bank.setLastAccountNumber(Bank.getLastAccountNumber()+1);
@@ -63,6 +69,6 @@ public abstract class Account {
             this.accountNumber = Bank.getLastAccountNumber();
         }
         Bank.getAllAccountList().put(this.accountNumber, this);
-        this.owner.getAllPersonnalAccount().add(this);
+        this.owner.getAllPersonalAccount().add(this);
     }
 }
