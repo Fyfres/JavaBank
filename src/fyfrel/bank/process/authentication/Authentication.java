@@ -11,9 +11,7 @@ public class Authentication {
         ArrayList<User> allUser = Bank.getAllUserList();
         for (int i = 0; i < allUser.size(); i++) {
             User user = allUser.get(i);
-            UConsole.print(lastName + user.getLastname());
-            UConsole.print(firstName + user.getFirstName());
-            if(lastName.equals(user.getLastname()) && firstName.equals(user.getLastname())) {
+            if(lastName.equals(user.getLastname()) && firstName.equals(user.getFirstName())) {
                 return false;
             }
         }

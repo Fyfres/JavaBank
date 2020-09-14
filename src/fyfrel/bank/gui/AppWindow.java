@@ -21,29 +21,37 @@ public class AppWindow extends JFrame{
         this.setIconImage(oui.getImage());
         this.setSize(UScreen.getScreenSize()[0], UScreen.getScreenSize()[1]);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        createOpenMenu();
+        createAuthMenu(new JPanel(), "AuthMenu");
         createRegisterMenu();
         createErrorRegisterMenu();
         createConnectionMenu();
+        createErrorConnectionMenu();
 
-            
+
         this.add(panel);
         this.openCard("AuthMenu");
         this.setVisible(true);
     }
 
-    private void createOpenMenu() {
-        JPanel card = new JPanel();
+    private void createAuthMenu(JPanel card, String cardName) {
+        GridBagConstraints c = new GridBagConstraints();
+        createAuthMenu(card, cardName, c);
+    }
 
+    private void createAuthMenu(JPanel card, String cardName, GridBagConstraints c) {
         JButton login = new JButton("Connexion");
         login.addActionListener(new Connection());
-        card.add(login);
+        c.gridx = 0;
+        c.gridy = 1;
+        card.add(login, c);
 
         JButton register = new JButton("Créer un Compte");
         register.addActionListener(new Register());
-        card.add(register);
+        c.gridx = 2;
+        c.gridy = 1;
+        card.add(register, c);
 
-        panel.add(card, "AuthMenu");
+        panel.add(card, cardName);
     }
 
     private void createRegisterMenu() {
@@ -112,56 +120,72 @@ public class AppWindow extends JFrame{
         c.insets = new Insets(100, 0, 0, 0);
         card.add(register, c);
 
+        JButton backAuthMenu = new JButton("Retour");
+        backAuthMenu.addActionListener(new BackToAuthMenu());
+        c.gridx = 0;
+        c.gridy = 8;
+        c.insets = new Insets(25, 0, 0, 0);
+        card.add(backAuthMenu, c);
+
         panel.add(card, "RegisterMenu");
     }
 
 
     private void createErrorRegisterMenu() {
         JPanel card = new JPanel();
+        card.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
 
         JLabel error = new JLabel("Vous avez déjà un compte");
-        card.add(error);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 50, 0);
+        card.add(error, c);
 
-        JButton login = new JButton("Connexion");
-        login.addActionListener(new Connection());
-        card.add(login);
-
-        JButton register = new JButton("Créer un Compte");
-        register.addActionListener(new Register());
-        card.add(register);
-
-
-
-
-
-
-        panel.add(card, "AlreadyExist");
+        createAuthMenu(card, "AlreadyExist");
     }
 
 
     private void createConnectionMenu() {
-        componentToGetText.put("ConnectionMenu" , new ArrayList<>());
+        JPanel card = new JPanel();
+        card.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        createConnectionMenu(card, "ConnectionMenu", c);
+    }
+
+    private void createErrorConnectionMenu() {
         JPanel card = new JPanel();
         card.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        JLabel title = new JLabel("Connexion utilisateur");
+        JLabel title = new JLabel("Les identifiants ou mot de passe ne correspondent pas.");
         c.gridx = 0;
         c.gridy = 0;
+        card.add(title, c);
+
+        createConnectionMenu(card, "ErrorConnectionMenu", c);
+    }
+
+    private void createConnectionMenu(JPanel card, String cardName, GridBagConstraints c) {
+        componentToGetText.put("ConnectionMenu" , new ArrayList<>());
+
+        JLabel title = new JLabel("Connexion utilisateur");
+        c.gridx = 0;
+        c.gridy = 1;
         card.add(title, c);
 
 
 
         JLabel firstNameLabel = new JLabel("Votre prénom : ");
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         c.insets = new Insets(100, 0, 0, 0);
         card.add(firstNameLabel, c);
 
         JTextField firstName = new JTextField();
         componentToGetText.get("ConnectionMenu").add(firstName);
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         c.insets = new Insets(20, 0, 0, 0);
         firstName.setColumns(15);
         card.add(firstName, c);
@@ -170,13 +194,13 @@ public class AppWindow extends JFrame{
 
         JLabel lastNameLabel = new JLabel("Votre nom : ");
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 4;
         c.insets = new Insets(50, 0, 0, 0);
         card.add(lastNameLabel, c);
 
         JTextField lastName = new JTextField();
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 5;
         c.insets = new Insets(20, 0, 0, 0);
         lastName.setColumns(15);
         componentToGetText.get("ConnectionMenu").add(lastName);
@@ -186,13 +210,13 @@ public class AppWindow extends JFrame{
 
         JLabel passwordLabel = new JLabel("Votre mot de passe : ");
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 6;
         c.insets = new Insets(50, 0, 0, 0);
         card.add(passwordLabel, c);
 
         JPasswordField password = new JPasswordField();
         c.gridx = 0;
-        c.gridy = 6;
+        c.gridy = 7;
         c.insets = new Insets(20, 0, 0, 0);
         password.setColumns(15);
         componentToGetText.get("ConnectionMenu").add(password);
@@ -201,11 +225,18 @@ public class AppWindow extends JFrame{
         JButton register = new JButton("Se connecter");
         register.addActionListener(new UserConnection());
         c.gridx = 0;
-        c.gridy = 7;
+        c.gridy = 8;
         c.insets = new Insets(100, 0, 0, 0);
         card.add(register, c);
 
-        panel.add(card, "ConnectionMenu");
+        JButton backAuthMenu = new JButton("Retour");
+        backAuthMenu.addActionListener(new BackToAuthMenu());
+        c.gridx = 0;
+        c.gridy = 9;
+        c.insets = new Insets(25, 0, 0, 0);
+        card.add(backAuthMenu, c);
+
+        panel.add(card, cardName);
     }
 
 
@@ -223,7 +254,7 @@ public class AppWindow extends JFrame{
     public class Connection implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            openCard("Connection");
+            openCard("ConnectionMenu");
         }
     }
 
@@ -260,7 +291,14 @@ public class AppWindow extends JFrame{
                 openCard("AppMenu");
                 return;
             }
-            openCard("ConnectError");
+            openCard("ErrorConnectionMenu");
+        }
+    }
+
+    public class BackToAuthMenu implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            openCard("AuthMenu");
         }
     }
 }
