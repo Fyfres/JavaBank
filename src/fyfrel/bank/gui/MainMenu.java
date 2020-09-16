@@ -2,6 +2,7 @@ package fyfrel.bank.gui;
 
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.gui.commonlistener.CommonListener;
+import fyfrel.bank.gui.managementmenu.AccountListMenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,7 +76,11 @@ public class MainMenu extends JPanel{
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            JPanel listPanel = (JPanel) window.getComponentToGetText().get("AccountListMenu").get(0);
+            listPanel.removeAll();
+            AccountListMenu.recreateListWhenReady(listPanel, window);
 
+            window.openCard("AccountListMenu");
         }
     }
 }

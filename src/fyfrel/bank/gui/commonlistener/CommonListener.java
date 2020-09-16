@@ -46,4 +46,17 @@ public class CommonListener {
             window.openCard("AuthMenu");
         }
     }
+
+    public static class BackToMainMenu implements ActionListener {
+        private AppWindow window;
+
+        public BackToMainMenu(AppWindow receivedWindow) {
+            this.window = receivedWindow;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            window.openCard("UserMenu");
+        }
+    }
 }

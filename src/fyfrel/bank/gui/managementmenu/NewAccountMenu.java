@@ -6,6 +6,7 @@ import fyfrel.bank.datas.clientside.accounts.SavingAccount;
 import fyfrel.bank.gui.AppWindow;
 import fyfrel.bank.gui.commonlistener.CommonListener;
 
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -177,6 +178,15 @@ public class NewAccountMenu extends JPanel {
         c.gridy = 4;
         c.insets = new Insets(30, 25, 25, 0);
         this.add(listAccount, c);
+
+
+        JButton backToMenu = new JButton("Menu Principal");
+        backToMenu.addActionListener(new CommonListener.BackToMainMenu(window));
+        c.gridx = 1;
+        c.gridy = 5;
+        c.insets = new Insets(30, 25, 25, 0);
+        this.add(backToMenu, c);
+
 
         window.getPanel().add(this, cardName);
     }

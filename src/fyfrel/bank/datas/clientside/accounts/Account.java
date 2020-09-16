@@ -10,7 +10,7 @@ public abstract class Account {
     protected Integer accountNumber;
     protected User owner;
     protected String accountType;
-    protected double content;
+    protected Double content;
     protected ArrayList<Transaction> allTransactions = new ArrayList<>();
 
     public Integer getAccountNumber() {
@@ -31,10 +31,10 @@ public abstract class Account {
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
-    public double getContent() {
+    public Double getContent() {
         return content;
     }
-    public void setContent(double content) {
+    public void setContent(Double content) {
         this.content = content;
     }
     public ArrayList<Transaction> getAllTransactions() {

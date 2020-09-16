@@ -7,6 +7,7 @@ import fyfrel.bank.gui.authmenu.AuthMainMenu;
 import fyfrel.bank.gui.authmenu.ConnectionMenu;
 import fyfrel.bank.gui.authmenu.RegisterMenu;
 import fyfrel.bank.gui.commonlistener.CommonListener;
+import fyfrel.bank.gui.managementmenu.AccountListMenu;
 import fyfrel.bank.gui.managementmenu.NewAccountMenu;
 import fyfrel.bank.process.authentication.Authentication;
 import fyfrel.mylibrary.utility.UMath;
@@ -56,6 +57,7 @@ public class AppWindow extends JFrame{
         ConnectionMenu.createConnectionMenu(this);
         new MainMenu(this);
         NewAccountMenu.createNewAccountMenu(this);
+        new AccountListMenu(this);
 
 
         this.add(panel);
