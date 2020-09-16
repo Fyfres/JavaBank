@@ -19,7 +19,7 @@ public class AccountOperation {
     public static Boolean withdraw(Account account, double toWithdraw) {
         if(TestAccountOperation.canWithdraw(account, toWithdraw)) {
             account.setContent(account.getContent() - toWithdraw);
-            AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList().get(0), toWithdraw);
+            AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList()[0], toWithdraw);
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ public class AccountOperation {
      */
     public static Boolean deposit(Account account, double toDeposit) {
         account.setContent(account.getContent() + toDeposit);
-        AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList().get(1), toDeposit);
+        AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList()[1], toDeposit);
         return true;
     }
 
@@ -48,8 +48,8 @@ public class AccountOperation {
         if(TestAccountOperation.canWithdraw(account, toWithdraw)) {
             Account otherAccount = Bank.getAllAccountList().get(otherAccountNumber);
             account.setContent(account.getContent() - toWithdraw);
-            AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList().get(2), toWithdraw, otherAccount);
-            AccountOperation.saveOperation(otherAccount , Bank.getAllTransactionTypeList().get(3), toWithdraw, account);
+            AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList()[2], toWithdraw, otherAccount);
+            AccountOperation.saveOperation(otherAccount , Bank.getAllTransactionTypeList()[3], toWithdraw, account);
             return true;
         }
         return false;

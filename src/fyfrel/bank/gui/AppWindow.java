@@ -1,7 +1,15 @@
 package fyfrel.bank.gui;
 
+import fyfrel.bank.datas.bankside.Bank;
+import fyfrel.bank.datas.clientside.accounts.CurrentAccount;
+import fyfrel.bank.datas.clientside.accounts.SavingAccount;
+import fyfrel.bank.gui.authmenu.AuthMainMenu;
+import fyfrel.bank.gui.authmenu.ConnectionMenu;
+import fyfrel.bank.gui.authmenu.RegisterMenu;
+import fyfrel.bank.gui.commonlistener.CommonListener;
+import fyfrel.bank.gui.managementmenu.NewAccountMenu;
 import fyfrel.bank.process.authentication.Authentication;
-import fyfrel.mylibrary.utility.UConsole;
+import fyfrel.mylibrary.utility.UMath;
 import fyfrel.mylibrary.utility.UScreen;
 
 import javax.swing.*;
@@ -15,17 +23,39 @@ public class AppWindow extends JFrame{
     private JPanel panel = new JPanel(new CardLayout());
     private HashMap<String, ArrayList<Object>> componentToGetText = new HashMap<>();
 
+    private ImageIcon appIcon = new ImageIcon("src/fyfrel/bank/misc/img/Icon.png");
+    public JPanel getPanel() {
+        return panel;
+    }
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
+    public HashMap<String, ArrayList<Object>> getComponentToGetText() {
+        return componentToGetText;
+    }
+    public void setComponentToGetText(HashMap<String, ArrayList<Object>> componentToGetText) {
+        this.componentToGetText = componentToGetText;
+    }
+    public ImageIcon getAppIcon() {
+        return appIcon;
+    }
+    public void setAppIcon(ImageIcon appIcon) {
+        this.appIcon = appIcon;
+    }
+
+
     public AppWindow() {
         this.setTitle("Ma Banque");
-        ImageIcon oui = new ImageIcon("src/fyfrel/bank/misc/img/Icon.png");
-        this.setIconImage(oui.getImage());
+        this.setIconImage(appIcon.getImage());
         this.setSize(UScreen.getScreenSize()[0], UScreen.getScreenSize()[1]);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        createAuthMenu(new JPanel(), "AuthMenu");
-        createRegisterMenu();
-        createErrorRegisterMenu();
-        createConnectionMenu();
-        createErrorConnectionMenu();
+
+
+        AuthMainMenu.createAuthMainMenu(this);
+        new RegisterMenu(this);
+        ConnectionMenu.createConnectionMenu(this);
+        new MainMenu(this);
+        NewAccountMenu.createNewAccountMenu(this);
 
 
         this.add(panel);
@@ -33,272 +63,8 @@ public class AppWindow extends JFrame{
         this.setVisible(true);
     }
 
-    private void createAuthMenu(JPanel card, String cardName) {
-        GridBagConstraints c = new GridBagConstraints();
-        createAuthMenu(card, cardName, c);
-    }
-
-    private void createAuthMenu(JPanel card, String cardName, GridBagConstraints c) {
-        JButton login = new JButton("Connexion");
-        login.addActionListener(new Connection());
-        c.gridx = 0;
-        c.gridy = 1;
-        card.add(login, c);
-
-        JButton register = new JButton("Créer un Compte");
-        register.addActionListener(new Register());
-        c.gridx = 2;
-        c.gridy = 1;
-        card.add(register, c);
-
-        panel.add(card, cardName);
-    }
-
-    private void createRegisterMenu() {
-        componentToGetText.put("RegisterMenu" , new ArrayList<>());
-        JPanel card = new JPanel();
-        card.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-
-        JLabel title = new JLabel("Création d'un nouvel utilisateur");
-        c.gridx = 0;
-        c.gridy = 0;
-        card.add(title, c);
-
-
-
-        JLabel firstNameLabel = new JLabel("Votre prénom : ");
-        c.gridx = 0;
-        c.gridy = 1;
-        c.insets = new Insets(100, 0, 0, 0);
-        card.add(firstNameLabel, c);
-
-        JTextField firstName = new JTextField();
-        componentToGetText.get("RegisterMenu").add(firstName);
-        c.gridx = 0;
-        c.gridy = 2;
-        c.insets = new Insets(20, 0, 0, 0);
-        firstName.setColumns(15);
-        card.add(firstName, c);
-
-
-
-        JLabel lastNameLabel = new JLabel("Votre nom : ");
-        c.gridx = 0;
-        c.gridy = 3;
-        c.insets = new Insets(50, 0, 0, 0);
-        card.add(lastNameLabel, c);
-
-        JTextField lastName = new JTextField();
-        c.gridx = 0;
-        c.gridy = 4;
-        c.insets = new Insets(20, 0, 0, 0);
-        lastName.setColumns(15);
-        componentToGetText.get("RegisterMenu").add(lastName);
-        card.add(lastName, c);
-
-
-
-        JLabel passwordLabel = new JLabel("Votre mot de passe : ");
-        c.gridx = 0;
-        c.gridy = 5;
-        c.insets = new Insets(50, 0, 0, 0);
-        card.add(passwordLabel, c);
-
-        JPasswordField password = new JPasswordField();
-        c.gridx = 0;
-        c.gridy = 6;
-        c.insets = new Insets(20, 0, 0, 0);
-        password.setColumns(15);
-        componentToGetText.get("RegisterMenu").add(password);
-        card.add(password, c);
-
-        JButton register = new JButton("Créer un Compte");
-        register.addActionListener(new UserCreation());
-        c.gridx = 0;
-        c.gridy = 7;
-        c.insets = new Insets(100, 0, 0, 0);
-        card.add(register, c);
-
-        JButton backAuthMenu = new JButton("Retour");
-        backAuthMenu.addActionListener(new BackToAuthMenu());
-        c.gridx = 0;
-        c.gridy = 8;
-        c.insets = new Insets(25, 0, 0, 0);
-        card.add(backAuthMenu, c);
-
-        panel.add(card, "RegisterMenu");
-    }
-
-
-    private void createErrorRegisterMenu() {
-        JPanel card = new JPanel();
-        card.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-
-        JLabel error = new JLabel("Vous avez déjà un compte");
-        c.gridx = 1;
-        c.gridy = 0;
-        c.insets = new Insets(0, 0, 50, 0);
-        card.add(error, c);
-
-        createAuthMenu(card, "AlreadyExist");
-    }
-
-
-    private void createConnectionMenu() {
-        JPanel card = new JPanel();
-        card.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        createConnectionMenu(card, "ConnectionMenu", c);
-    }
-
-    private void createErrorConnectionMenu() {
-        JPanel card = new JPanel();
-        card.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-
-        JLabel title = new JLabel("Les identifiants ou mot de passe ne correspondent pas.");
-        c.gridx = 0;
-        c.gridy = 0;
-        card.add(title, c);
-
-        createConnectionMenu(card, "ErrorConnectionMenu", c);
-    }
-
-    private void createConnectionMenu(JPanel card, String cardName, GridBagConstraints c) {
-        componentToGetText.put("ConnectionMenu" , new ArrayList<>());
-
-        JLabel title = new JLabel("Connexion utilisateur");
-        c.gridx = 0;
-        c.gridy = 1;
-        card.add(title, c);
-
-
-
-        JLabel firstNameLabel = new JLabel("Votre prénom : ");
-        c.gridx = 0;
-        c.gridy = 2;
-        c.insets = new Insets(100, 0, 0, 0);
-        card.add(firstNameLabel, c);
-
-        JTextField firstName = new JTextField();
-        componentToGetText.get("ConnectionMenu").add(firstName);
-        c.gridx = 0;
-        c.gridy = 3;
-        c.insets = new Insets(20, 0, 0, 0);
-        firstName.setColumns(15);
-        card.add(firstName, c);
-
-
-
-        JLabel lastNameLabel = new JLabel("Votre nom : ");
-        c.gridx = 0;
-        c.gridy = 4;
-        c.insets = new Insets(50, 0, 0, 0);
-        card.add(lastNameLabel, c);
-
-        JTextField lastName = new JTextField();
-        c.gridx = 0;
-        c.gridy = 5;
-        c.insets = new Insets(20, 0, 0, 0);
-        lastName.setColumns(15);
-        componentToGetText.get("ConnectionMenu").add(lastName);
-        card.add(lastName, c);
-
-
-
-        JLabel passwordLabel = new JLabel("Votre mot de passe : ");
-        c.gridx = 0;
-        c.gridy = 6;
-        c.insets = new Insets(50, 0, 0, 0);
-        card.add(passwordLabel, c);
-
-        JPasswordField password = new JPasswordField();
-        c.gridx = 0;
-        c.gridy = 7;
-        c.insets = new Insets(20, 0, 0, 0);
-        password.setColumns(15);
-        componentToGetText.get("ConnectionMenu").add(password);
-        card.add(password, c);
-
-        JButton register = new JButton("Se connecter");
-        register.addActionListener(new UserConnection());
-        c.gridx = 0;
-        c.gridy = 8;
-        c.insets = new Insets(100, 0, 0, 0);
-        card.add(register, c);
-
-        JButton backAuthMenu = new JButton("Retour");
-        backAuthMenu.addActionListener(new BackToAuthMenu());
-        c.gridx = 0;
-        c.gridy = 9;
-        c.insets = new Insets(25, 0, 0, 0);
-        card.add(backAuthMenu, c);
-
-        panel.add(card, cardName);
-    }
-
-
-
-
-
-
-
-
-    private void openCard(String cardName) {
+    public void openCard(String cardName) {
         CardLayout cl = (CardLayout)(panel.getLayout());
         cl.show(panel, cardName);
-    }
-
-    public class Connection implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            openCard("ConnectionMenu");
-        }
-    }
-
-    public class Register implements ActionListener {
-        @Override
-        public  void    actionPerformed(ActionEvent e) {
-            openCard("RegisterMenu");
-        }
-    }
-
-    public class UserCreation implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            ArrayList<Object> components = componentToGetText.get("RegisterMenu");
-            JTextField firstName = (JTextField) components.get(0);
-            JTextField lastName = (JTextField) components.get(1);
-            JPasswordField password = (JPasswordField) components.get(2);
-            if(Authentication.register(firstName.getText(), lastName.getText(), password.getText())) {
-                openCard("AuthMenu");
-                return;
-            }
-            openCard("AlreadyExist");
-        }
-    }
-
-    public class UserConnection implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            ArrayList<Object> components = componentToGetText.get("RegisterMenu");
-            JTextField firstName = (JTextField) components.get(0);
-            JTextField lastName = (JTextField) components.get(1);
-            JPasswordField password = (JPasswordField) components.get(2);
-            if(Authentication.connection(firstName.getText(), lastName.getText(), password.getText())) {
-                openCard("AppMenu");
-                return;
-            }
-            openCard("ErrorConnectionMenu");
-        }
-    }
-
-    public class BackToAuthMenu implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            openCard("AuthMenu");
-        }
     }
 }

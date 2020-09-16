@@ -24,7 +24,7 @@ public class Authentication {
         ArrayList<User> allUser = Bank.getAllUserList();
         for (int i = 0; i < allUser.size(); i++) {
             User user = allUser.get(i);
-            if(lastName.equals(user.getLastname()) && firstName.equals(user.getLastname()) && password.equals(user.getPassword())) {
+            if(lastName.equals(user.getLastname()) && firstName.equals(user.getFirstName()) && password.equals(user.getPassword())) {
                 Bank.setManagingUser(user);
                 return true;
             }

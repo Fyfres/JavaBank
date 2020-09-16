@@ -10,16 +10,23 @@ public class Bank {
     // Managed by the app
     private static ArrayList<User> allUserList = new ArrayList<>();
     private static HashMap<Integer, Account> allAccountList = new HashMap<>();
-    private static ArrayList<String> allTransactionTypeList = new ArrayList<>();
+    private static final String[] allTransactionTypeList = {"Retrait", "Versement", "Virement", "Versement Externe"};
     private static User managingUser;
 
-    // Don't touch this unless you're sure of chat you're doing
-    private static int LAST_ACCOUNT_NUMBER = 0;
+    // !! IF YOU CREATE ANY NEW TYPE OF ACCOUNT ADD THEM HERE !!
+    private static final String[] ACCOUNT_TYPES = {"Courant", "Epargne"};
 
     // These are the value by default for each type of account
     private static final double DEFAULT_INTEREST = 15;
     private static final double DEFAULT_OVERDRAFT = 200;
 
+    // Don't touch this unless you're sure of chat you're doing
+    private static int LAST_ACCOUNT_NUMBER = 0;
+
+
+    public static String[] getAccountTypes() {
+        return ACCOUNT_TYPES;
+    }
     public static double getDefaultInterest() {
         return DEFAULT_INTEREST;
     }
@@ -38,11 +45,8 @@ public class Bank {
     public static void setAllAccountList(HashMap<Integer, Account> allAccountList) {
         Bank.allAccountList = allAccountList;
     }
-    public static ArrayList<String> getAllTransactionTypeList() {
+    public static String[] getAllTransactionTypeList() {
         return allTransactionTypeList;
-    }
-    public static void setAllTransactionTypeList(ArrayList<String> allTransactionTypeList) {
-        Bank.allTransactionTypeList = allTransactionTypeList;
     }
     public static int getLastAccountNumber() {
         return LAST_ACCOUNT_NUMBER;
@@ -55,15 +59,5 @@ public class Bank {
     }
     public static void setManagingUser(User managingUser) {
         Bank.managingUser = managingUser;
-    }
-
-    /**
-     * Initialize all transaction type
-     */
-    public static void INIT_VALUE() {
-        Bank.allTransactionTypeList.add("Retrait");
-        Bank.allTransactionTypeList.add("Versement");
-        Bank.allTransactionTypeList.add("Virement");
-        Bank.allTransactionTypeList.add("Versement Externe");
     }
 }
