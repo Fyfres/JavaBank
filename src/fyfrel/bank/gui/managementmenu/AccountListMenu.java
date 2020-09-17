@@ -121,7 +121,7 @@ public class AccountListMenu extends JPanel{
                 window.getPanel().remove(panel);
             }
             panel = new AccountOptionMenu(accountNumber, window);
-            window.getPanel().add(panel);
+            window.getPanel().add(panel, "AccountOptionMenu");
             window.openCard("AccountOptionMenu");
         }
     }

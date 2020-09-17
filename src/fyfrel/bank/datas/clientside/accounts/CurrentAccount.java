@@ -36,4 +36,18 @@ public class CurrentAccount extends Account{
         super(owner, "Courant", amount);
         this.overdraft = Bank.getDefaultOverdraft();
     }
+
+
+
+    /**
+     * Test if the amount to withdraw isn't to high
+     * @param toWithdraw amount to withdraw
+     * @return if the amount can be withdrawn without problem
+     */
+    public Boolean canWithdraw( double toWithdraw) {
+        if(this.getContent() - toWithdraw < this.getOverdraft()) {
+            return false;
+        }
+        return true;
+    }
 }

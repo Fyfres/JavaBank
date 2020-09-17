@@ -3,7 +3,6 @@ package fyfrel.bank.process.operation;
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.Transaction;
 import fyfrel.bank.datas.clientside.accounts.Account;
-import fyfrel.bank.process.test.TestAccountOperation;
 
 /**
  * Class used each time an action on the amount of an account must be done
@@ -17,7 +16,7 @@ public class AccountOperation {
      * @return a Boolean if the operation was done without problem or not
      */
     public static Boolean withdraw(Account account, double toWithdraw) {
-        if(TestAccountOperation.canWithdraw(account, toWithdraw)) {
+        if(account.canWithdraw(account, toWithdraw)) {
             account.setContent(account.getContent() - toWithdraw);
             AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList()[0], toWithdraw);
             return true;
@@ -45,7 +44,7 @@ public class AccountOperation {
      * @return a Boolean if the operation was done without problem or not
      */
     public static Boolean payment(Account account, double toWithdraw, int otherAccountNumber) {
-        if(TestAccountOperation.canWithdraw(account, toWithdraw)) {
+        if(account.canWithdraw(account, toWithdraw)) {
             Account otherAccount = Bank.getAllAccountList().get(otherAccountNumber);
             account.setContent(account.getContent() - toWithdraw);
             AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList()[2], toWithdraw, otherAccount);

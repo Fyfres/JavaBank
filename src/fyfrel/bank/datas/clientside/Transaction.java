@@ -8,7 +8,7 @@ import fyfrel.bank.datas.clientside.accounts.Account;
 public class Transaction {
     private Account account;
     private String transactionType;
-    private double amount;
+    private Double amount;
     private Account otherAccount;
 
     public Account getAccount() {
@@ -23,10 +23,10 @@ public class Transaction {
     public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
     }
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
     public Account getOtherAccount() {

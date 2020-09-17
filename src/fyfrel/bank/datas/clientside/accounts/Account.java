@@ -3,6 +3,9 @@ package fyfrel.bank.datas.clientside.accounts;
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.Transaction;
 import fyfrel.bank.datas.clientside.User;
+import fyfrel.bank.process.operation.AccountOperation;
+import fyfrel.bank.process.test.CastAccount;
+import fyfrel.mylibrary.utility.UConsole;
 
 import java.util.ArrayList;
 
@@ -55,6 +58,8 @@ public abstract class Account {
         this.accountType = accountType;
         this.content = content;
         this.addToList();
+        //TODO remove this shit
+        AccountOperation.deposit(this, 20);
     }
 
     /**
@@ -70,5 +75,26 @@ public abstract class Account {
         }
         Bank.getAllAccountList().put(this.accountNumber, this);
         this.owner.getAllPersonalAccount().add(this);
+    }
+
+
+
+    /**
+     * Test the type of account then test if the amount to withdraw isn't to high
+     * !! ADD AN ELSE IF HERE IF YOU ADD A NEW TYPE OF ACCOUNT !!
+     * @param account any type of Account
+     * @param toWithdraw amount to withdraw
+     * @return if the amount can be withdrawn without problem
+     */
+    public static Boolean canWithdraw(Account account, double toWithdraw) {
+        if(CastAccount.isCurrent(account)) {
+            CurrentAccount currentAccount = (CurrentAccount) account;
+            return currentAccount.canWithdraw(toWithdraw);
+        } else if(CastAccount.isSaving(account)) {
+            SavingAccount savingAccount = (SavingAccount) account;
+            return savingAccount.canWithdraw(toWithdraw);
+        }
+        UConsole.error("Couldn't find the type of Account.");
+        return false;
     }
 }

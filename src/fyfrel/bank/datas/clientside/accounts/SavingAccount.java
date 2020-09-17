@@ -43,4 +43,17 @@ public class SavingAccount extends Account {
     public void addInterest() {
         this.content += (this.content*this.interest)/100;
     }
+
+
+    /**
+     * Test if the amount to withdraw isn't to high
+     * @param toWithdraw amount to withdraw
+     * @return if the amount can be withdrawn without problem
+     */
+    public Boolean canWithdraw(double toWithdraw) {
+        if(toWithdraw > this.getContent()) {
+            return false;
+        }
+        return true;
+    }
 }

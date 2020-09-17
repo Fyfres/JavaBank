@@ -78,24 +78,7 @@ public class NewAccountMenu extends JPanel {
         c.gridy = 3;
         c.insets = new Insets(20, 0, 0, 0);
         window.getComponentToGetText().get(cardName).add(amount);
-        amount.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                JTextField amount = (JTextField) window.getComponentToGetText().get(cardName).get(1);
-                CommonListener.fieldNumberVerif(amount, false);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                return;
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                JTextField amount = (JTextField) window.getComponentToGetText().get(cardName).get(1);
-                CommonListener.fieldNumberVerif(amount, false);
-            }
-        });
+        amount.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, false));
         this.add(amount, c);
 
 
@@ -116,24 +99,7 @@ public class NewAccountMenu extends JPanel {
             c.gridy = 3;
             c.insets = new Insets(20, 0, 0, 0);
             window.getComponentToGetText().get(cardName).add(overdraft);
-            overdraft.getDocument().addDocumentListener(new DocumentListener() {
-                @Override
-                public void insertUpdate(DocumentEvent e) {
-                    JTextField overdraft = (JTextField) window.getComponentToGetText().get(cardName).get(2);
-                    CommonListener.fieldNumberVerif(overdraft, true);
-                }
-
-                @Override
-                public void removeUpdate(DocumentEvent e) {
-                    return;
-                }
-
-                @Override
-                public void changedUpdate(DocumentEvent e) {
-                    JTextField overdraft = (JTextField) window.getComponentToGetText().get(cardName).get(2);
-                    CommonListener.fieldNumberVerif(overdraft, true);
-                }
-            });
+            overdraft.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, true));
             this.add(overdraft, c);
 
 
@@ -151,24 +117,7 @@ public class NewAccountMenu extends JPanel {
             c.gridy = 3;
             c.insets = new Insets(20, 0, 0, 0);
             window.getComponentToGetText().get(cardName).add(interest);
-            interest.getDocument().addDocumentListener(new DocumentListener() {
-                @Override
-                public void insertUpdate(DocumentEvent e) {
-                    JTextField interest = (JTextField) window.getComponentToGetText().get(cardName).get(2);
-                    CommonListener.fieldNumberVerif(interest, false);
-                }
-
-                @Override
-                public void removeUpdate(DocumentEvent e) {
-                    return;
-                }
-
-                @Override
-                public void changedUpdate(DocumentEvent e) {
-                    JTextField interest = (JTextField) window.getComponentToGetText().get(cardName).get(2);
-                    CommonListener.fieldNumberVerif(interest, false);
-                }
-            });
+            interest.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, false));
             this.add(interest, c);
         }
 

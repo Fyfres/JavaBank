@@ -34,7 +34,7 @@ public class MainMenu extends JPanel{
 
 
         JButton listAccount = new JButton("Aperçu de mes Comptes");
-        listAccount.addActionListener(new ListAccountMenu());
+        listAccount.addActionListener(new CommonListener.OpenListAccountMenu(window));
         c.gridx = 0;
         c.gridy = 2;
         c.insets = new Insets(30, 0, 0, 0);
@@ -71,16 +71,4 @@ public class MainMenu extends JPanel{
         }
     }
 
-
-    public class ListAccountMenu implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JPanel listPanel = (JPanel) window.getComponentToGetText().get("AccountListMenu").get(0);
-            listPanel.removeAll();
-            AccountListMenu.recreateListWhenReady(listPanel, window);
-
-            window.openCard("AccountListMenu");
-        }
-    }
 }
