@@ -4,7 +4,6 @@ import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.Transaction;
 import fyfrel.bank.datas.clientside.User;
 import fyfrel.bank.process.operation.AccountOperation;
-import fyfrel.bank.process.test.CastAccount;
 import fyfrel.mylibrary.utility.UConsole;
 
 import java.util.ArrayList;
@@ -58,8 +57,6 @@ public abstract class Account {
         this.accountType = accountType;
         this.content = content;
         this.addToList();
-        //TODO remove this shit
-        AccountOperation.deposit(this, 20);
     }
 
     /**
@@ -87,14 +84,35 @@ public abstract class Account {
      * @return if the amount can be withdrawn without problem
      */
     public static Boolean canWithdraw(Account account, double toWithdraw) {
-        if(CastAccount.isCurrent(account)) {
-            CurrentAccount currentAccount = (CurrentAccount) account;
-            return currentAccount.canWithdraw(toWithdraw);
-        } else if(CastAccount.isSaving(account)) {
-            SavingAccount savingAccount = (SavingAccount) account;
-            return savingAccount.canWithdraw(toWithdraw);
+        if(account.isCurrent()) {
+            return ((CurrentAccount) account).canWithdraw(toWithdraw);
+        } else if(account.isSaving()) {
+            return ((SavingAccount) account).canWithdraw(toWithdraw);
         }
         UConsole.error("Couldn't find the type of Account.");
         return false;
+    }
+
+
+
+
+
+    // TODO !! ADD A "isTypeOfAccount" METHOD WHENEVER YOU CREATE A NEW TYPE OF ACCOUNT !!
+
+
+    /**
+     * Test if an Account can be Cast to a CurrentAccount
+     * @return a Boolean if the account can be cast or not
+     */
+    public Boolean isCurrent() {
+        return this instanceof CurrentAccount;
+    }
+
+    /**
+     * Test if an Account can be Cast to a SavingAccount
+     * @return a Boolean if the account can be cast or not
+     */
+    public Boolean isSaving() {
+        return this instanceof SavingAccount;
     }
 }

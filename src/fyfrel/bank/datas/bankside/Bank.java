@@ -18,7 +18,7 @@ public class Bank {
 
     // These are the value by default for each type of account
     private static final double DEFAULT_INTEREST = 15;
-    private static final double DEFAULT_OVERDRAFT = 200;
+    private static final double DEFAULT_OVERDRAFT = -200;
 
     // Don't touch this unless you're sure of chat you're doing
     private static int LAST_ACCOUNT_NUMBER = 0;

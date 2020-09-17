@@ -78,7 +78,7 @@ public class NewAccountMenu extends JPanel {
         c.gridy = 3;
         c.insets = new Insets(20, 0, 0, 0);
         window.getComponentToGetText().get(cardName).add(amount);
-        amount.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, false));
+        amount.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, 1, false));
         this.add(amount, c);
 
 
@@ -99,7 +99,7 @@ public class NewAccountMenu extends JPanel {
             c.gridy = 3;
             c.insets = new Insets(20, 0, 0, 0);
             window.getComponentToGetText().get(cardName).add(overdraft);
-            overdraft.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, true));
+            overdraft.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, 1, true));
             this.add(overdraft, c);
 
 
@@ -117,7 +117,7 @@ public class NewAccountMenu extends JPanel {
             c.gridy = 3;
             c.insets = new Insets(20, 0, 0, 0);
             window.getComponentToGetText().get(cardName).add(interest);
-            interest.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, false));
+            interest.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, 1, false));
             this.add(interest, c);
         }
 

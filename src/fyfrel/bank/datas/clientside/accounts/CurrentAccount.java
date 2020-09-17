@@ -44,7 +44,7 @@ public class CurrentAccount extends Account{
      * @param toWithdraw amount to withdraw
      * @return if the amount can be withdrawn without problem
      */
-    public Boolean canWithdraw( double toWithdraw) {
+    public Boolean canWithdraw(double toWithdraw) {
         if(this.getContent() - toWithdraw < this.getOverdraft()) {
             return false;
         }

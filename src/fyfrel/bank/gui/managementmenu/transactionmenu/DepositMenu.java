@@ -3,6 +3,9 @@ package fyfrel.bank.gui.managementmenu.transactionmenu;
 import fyfrel.bank.datas.clientside.accounts.Account;
 import fyfrel.bank.gui.AppWindow;
 import fyfrel.bank.gui.commonlistener.CommonListener;
+import fyfrel.bank.gui.managementmenu.AccountListMenu;
+import fyfrel.bank.gui.managementmenu.AccountOptionMenu;
+import fyfrel.bank.process.operation.AccountOperation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +32,8 @@ public class DepositMenu extends JPanel {
         createDepositMenu(error);
     }
 
-    private void createDepositMenu(ArrayList<Object> error) {
+    protected void createDepositMenu(ArrayList<Object> error) {
+        this.removeAll();
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -56,10 +60,12 @@ public class DepositMenu extends JPanel {
 
         JTextField amount = new JTextField("0");
         amount.setColumns(15);
-        amount.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, false));
+        amount.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, 0, false));
         c.gridx = 0;
         c.gridy = 3;
         c.insets = new Insets(0,0,20,0);
+        window.getComponentToGetText().put("DepositMenu", new ArrayList<>());
+        window.getComponentToGetText().get("DepositMenu").add(amount);
         this.add(amount, c);
 
 
@@ -68,11 +74,12 @@ public class DepositMenu extends JPanel {
         buttonPanel.setLayout(new GridBagLayout());
         GridBagConstraints bc = new GridBagConstraints();
 
-        // TODO add listener
+
         JButton validate = new JButton("Confirmer");
         bc.gridx = 0;
         bc.gridy = 0;
         bc.insets = new Insets(0,20,0,20);
+        validate.addActionListener(new Deposit(window, account, this));
         buttonPanel.add(validate, bc);
 
 
@@ -91,19 +98,36 @@ public class DepositMenu extends JPanel {
 
 
 
-    public class Deposit implements ActionListener {
+    public static class Deposit implements ActionListener {
+        private AppWindow window;
+        private Account account;
         private static JPanel panel;
+        private DepositMenu currPanel;
 
+        public Deposit(AppWindow receivedWindow, Account account, DepositMenu currPanel) {
+            this.window = receivedWindow;
+            this.account = account;
+            this.currPanel = currPanel;
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(panel != null) {
-                window.getPanel().remove(panel);
-            }
 
-            panel = new PaymentMenu(account, window);
-            window.getPanel().add(panel, "PaymentMenu");
-            window.openCard("PaymentMenu");
+            JTextField amount = (JTextField) window.getComponentToGetText().get("DepositMenu").get(0);
+
+            if(AccountOperation.deposit(account, Double.parseDouble(amount.getText()))) {
+                if(panel != null) {
+                    window.getPanel().remove(panel);
+                }
+                panel = new AccountOptionMenu(account.getAccountNumber(), window);
+                window.getPanel().add(panel, "AccountOptionMenu");
+                window.openCard("AccountOptionMenu");
+            } else {
+                ArrayList<Object> temp = new ArrayList<>();
+                temp.add(true);
+                temp.add("Une erreur est survenue lors de la tentative de transaction.");
+                currPanel.createDepositMenu(temp);
+            }
         }
     }
 }

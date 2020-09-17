@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class AccountOptionMenu extends JPanel {
     private Integer accountNumber;
@@ -97,13 +96,13 @@ public class AccountOptionMenu extends JPanel {
             JLabel type = new JLabel(transaction.getTransactionType());
             tc.gridy = 0;
             tc.gridx = 0;
-            tc.insets = new Insets(20,0,200,50);
+            tc.insets = new Insets(20,0,20,50);
             transactionPanel.add(type, tc);
 
             JLabel amount = new JLabel(transaction.getAmount().toString());
             tc.gridy = 0;
             tc.gridx = 1;
-            tc.insets = new Insets(20,0,200,50);
+            tc.insets = new Insets(20,0,20,50);
             transactionPanel.add(amount, tc);
 
             transactionPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.black));

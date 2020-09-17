@@ -18,19 +18,21 @@ public class CommonListener {
         private Boolean negative;
         private AppWindow window;
         private String cardName;
+        private Integer index;
 
-        public FieldNumberVerif(AppWindow window, String cardName, JTextField field, Boolean negative) {
+        public FieldNumberVerif(AppWindow window, String cardName, JTextField field, Integer index, Boolean negative) {
             this.window = window;
             this.field = field;
             this.negative = negative;
             this.cardName = cardName;
+            this.index = index;
         }
 
 
 
         @Override
         public void insertUpdate(DocumentEvent e) {
-            JTextField amount = (JTextField) window.getComponentToGetText().get(cardName).get(1);
+            JTextField amount = (JTextField) window.getComponentToGetText().get(cardName).get(index);
             fieldNumberVerif(amount, false);
         }
 
@@ -41,7 +43,7 @@ public class CommonListener {
 
         @Override
         public void changedUpdate(DocumentEvent e) {
-            JTextField amount = (JTextField) window.getComponentToGetText().get(cardName).get(1);
+            JTextField amount = (JTextField) window.getComponentToGetText().get(cardName).get(index);
             fieldNumberVerif(amount, false);
         }
 
