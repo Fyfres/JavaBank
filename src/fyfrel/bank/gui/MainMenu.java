@@ -2,7 +2,6 @@ package fyfrel.bank.gui;
 
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.gui.commonlistener.CommonListener;
-import fyfrel.bank.gui.managementmenu.AccountListMenu;
 
 import javax.swing.*;
 import java.awt.*;

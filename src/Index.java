@@ -1,4 +1,3 @@
-import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.gui.AppWindow;
 
 public class Index {

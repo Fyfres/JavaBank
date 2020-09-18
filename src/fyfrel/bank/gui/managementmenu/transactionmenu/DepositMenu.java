@@ -3,7 +3,6 @@ package fyfrel.bank.gui.managementmenu.transactionmenu;
 import fyfrel.bank.datas.clientside.accounts.Account;
 import fyfrel.bank.gui.AppWindow;
 import fyfrel.bank.gui.commonlistener.CommonListener;
-import fyfrel.bank.gui.managementmenu.AccountListMenu;
 import fyfrel.bank.gui.managementmenu.AccountOptionMenu;
 import fyfrel.bank.process.operation.AccountOperation;
 

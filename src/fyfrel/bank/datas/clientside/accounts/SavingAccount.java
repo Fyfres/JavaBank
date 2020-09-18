@@ -38,7 +38,7 @@ public class SavingAccount extends Account {
     }
 
     /**
-     * Add the setted percentage of € to the account amount
+     * Add the set percentage of € to the account amount
      */
     public void addInterest() {
         this.content += (this.content*this.interest)/100;

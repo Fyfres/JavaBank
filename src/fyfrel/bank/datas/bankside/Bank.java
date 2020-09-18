@@ -20,7 +20,7 @@ public class Bank {
     private static final double DEFAULT_INTEREST = 15;
     private static final double DEFAULT_OVERDRAFT = -200;
 
-    // Don't touch this unless you're sure of chat you're doing
+    // Start number of AccountNumber (ex : first created account will be 1 and it'll auto-increment each time)
     private static int LAST_ACCOUNT_NUMBER = 0;
 
 

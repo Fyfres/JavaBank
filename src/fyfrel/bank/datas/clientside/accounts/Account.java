@@ -3,7 +3,6 @@ package fyfrel.bank.datas.clientside.accounts;
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.Transaction;
 import fyfrel.bank.datas.clientside.User;
-import fyfrel.bank.process.operation.AccountOperation;
 import fyfrel.mylibrary.utility.UConsole;
 
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public abstract class Account {
 
     /**
      * Test the type of account then test if the amount to withdraw isn't to high
-     * !! ADD AN ELSE IF HERE IF YOU ADD A NEW TYPE OF ACCOUNT !!
+     * TODO !! ADD AN ELSE IF HERE IF YOU ADD A NEW TYPE OF ACCOUNT !!
      * @param account any type of Account
      * @param toWithdraw amount to withdraw
      * @return if the amount can be withdrawn without problem
