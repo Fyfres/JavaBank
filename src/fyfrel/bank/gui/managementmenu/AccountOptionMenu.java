@@ -105,10 +105,12 @@ public class AccountOptionMenu extends JPanel {
             tc.insets = new Insets(20,0,20,50);
             transactionPanel.add(amount, tc);
 
-            transactionPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.black));
+            c.fill = GridBagConstraints.BOTH;
             c.gridx = 0;
             c.gridy = i;
+            c.weightx = 1.0;
             i++;
+            transactionPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.black));
             panel.add(transactionPanel,c);
         }
         return panel;

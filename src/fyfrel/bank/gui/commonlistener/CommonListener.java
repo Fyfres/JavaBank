@@ -2,6 +2,7 @@ package fyfrel.bank.gui.commonlistener;
 
 import fyfrel.bank.gui.AppWindow;
 import fyfrel.bank.gui.managementmenu.AccountListMenu;
+import fyfrel.bank.gui.managementmenu.AccountOptionMenu;
 import fyfrel.bank.process.authentication.Authentication;
 import fyfrel.mylibrary.utility.UMath;
 
@@ -120,6 +121,28 @@ public class CommonListener {
             AccountListMenu.recreateListWhenReady(listPanel, window);
 
             window.openCard("AccountListMenu");
+        }
+    }
+
+
+    public static class OpenAccountOptionMenuList implements ActionListener {
+        private AppWindow window;
+        private Integer accountNumber;
+        private static JPanel panel;
+
+        public OpenAccountOptionMenuList(AppWindow receivedWindow, Integer accountNumber) {
+            this.window = receivedWindow;
+            this.accountNumber = accountNumber;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(panel != null) {
+                window.getPanel().remove(panel);
+            }
+            panel = new AccountOptionMenu(accountNumber, window);
+            window.getPanel().add(panel, "AccountOptionMenu");
+            window.openCard("AccountOptionMenu");
         }
     }
 }

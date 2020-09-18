@@ -87,7 +87,7 @@ public class AccountListMenu extends JPanel{
 
 
             JButton backToMenu = new JButton("Voir ce compte");
-            backToMenu.addActionListener(new AccountOptionMenuList(window, account.getAccountNumber()));
+            backToMenu.addActionListener(new CommonListener.OpenAccountOptionMenuList(window, account.getAccountNumber()));
             c.gridx = 0;
             c.gridy = 2;
             c.insets = new Insets(30, 25, 25, 0);
@@ -105,24 +105,5 @@ public class AccountListMenu extends JPanel{
 
 
 
-    public static class AccountOptionMenuList implements ActionListener {
-        private AppWindow window;
-        private Integer accountNumber;
-        private static JPanel panel;
 
-        public AccountOptionMenuList(AppWindow receivedWindow, Integer accountNumber) {
-            this.window = receivedWindow;
-            this.accountNumber = accountNumber;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if(panel != null) {
-                window.getPanel().remove(panel);
-            }
-            panel = new AccountOptionMenu(accountNumber, window);
-            window.getPanel().add(panel, "AccountOptionMenu");
-            window.openCard("AccountOptionMenu");
-        }
-    }
 }

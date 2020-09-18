@@ -47,6 +47,7 @@ public class AccountOperation {
         if(account.canWithdraw(account, toWithdraw)) {
             Account otherAccount = Bank.getAllAccountList().get(otherAccountNumber);
             account.setContent(account.getContent() - toWithdraw);
+            otherAccount.setContent(otherAccount.getContent() + toWithdraw);
             AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList()[2], toWithdraw, otherAccount);
             AccountOperation.saveOperation(otherAccount , Bank.getAllTransactionTypeList()[3], toWithdraw, account);
             return true;

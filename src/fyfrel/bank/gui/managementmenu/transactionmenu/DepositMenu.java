@@ -83,12 +83,12 @@ public class DepositMenu extends JPanel {
         buttonPanel.add(validate, bc);
 
 
-        // TODO add listener
         JButton goBack = new JButton("Annuler");
         bc.gridx = 1;
         bc.gridy = 0;
         bc.insets = new Insets(0,20,0,20);
-        buttonPanel.add(validate, bc);
+        goBack.addActionListener(new CommonListener.OpenAccountOptionMenuList(window, account.getAccountNumber()));
+        buttonPanel.add(goBack, bc);
 
         c.gridx = 0;
         c.gridy = 4;
@@ -123,10 +123,13 @@ public class DepositMenu extends JPanel {
                 window.getPanel().add(panel, "AccountOptionMenu");
                 window.openCard("AccountOptionMenu");
             } else {
+                window.remove(currPanel);
                 ArrayList<Object> temp = new ArrayList<>();
                 temp.add(true);
                 temp.add("Une erreur est survenue lors de la tentative de transaction.");
-                currPanel.createDepositMenu(temp);
+                window.getPanel().add(new DepositMenu(account, window, temp), "DepositMenu");
+                window.getPanel().revalidate();
+                window.openCard("DepositMenu");
             }
         }
     }
