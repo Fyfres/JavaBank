@@ -1,7 +1,7 @@
-import fyfrel.bank.gui.AppWindow;
+import fyfrel.bank.gui.WindowApp;
 
 public class Index {
     public static void main(String[] args) {
-        AppWindow window = new AppWindow();
+        WindowApp window = new WindowApp();
     }
 }

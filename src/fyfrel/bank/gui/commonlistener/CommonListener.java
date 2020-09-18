@@ -1,8 +1,8 @@
 package fyfrel.bank.gui.commonlistener;
 
-import fyfrel.bank.gui.AppWindow;
-import fyfrel.bank.gui.managementmenu.AccountListMenu;
-import fyfrel.bank.gui.managementmenu.AccountOptionMenu;
+import fyfrel.bank.gui.WindowApp;
+import fyfrel.bank.gui.panels.managementmenu.AccountListMenu;
+import fyfrel.bank.gui.panels.managementmenu.AccountOptionMenu;
 import fyfrel.bank.process.authentication.Authentication;
 import fyfrel.mylibrary.utility.UMath;
 
@@ -17,11 +17,11 @@ public class CommonListener {
     public static class FieldNumberVerif implements DocumentListener {
         private JTextField field;
         private Boolean negative;
-        private AppWindow window;
+        private WindowApp window;
         private String cardName;
         private Integer index;
 
-        public FieldNumberVerif(AppWindow window, String cardName, JTextField field, Integer index, Boolean negative) {
+        public FieldNumberVerif(WindowApp window, String cardName, JTextField field, Integer index, Boolean negative) {
             this.window = window;
             this.field = field;
             this.negative = negative;
@@ -75,9 +75,9 @@ public class CommonListener {
 
 
     public static class BackToAuthMenu implements ActionListener {
-        private AppWindow window;
+        private WindowApp window;
 
-        public BackToAuthMenu(AppWindow receivedWindow) {
+        public BackToAuthMenu(WindowApp receivedWindow) {
             this.window = receivedWindow;
         }
 
@@ -89,9 +89,9 @@ public class CommonListener {
     }
 
     public static class BackToMainMenu implements ActionListener {
-        private AppWindow window;
+        private WindowApp window;
 
-        public BackToMainMenu(AppWindow receivedWindow) {
+        public BackToMainMenu(WindowApp receivedWindow) {
             this.window = receivedWindow;
         }
 
@@ -108,9 +108,9 @@ public class CommonListener {
 
 
     public static class OpenListAccountMenu implements ActionListener {
-        private AppWindow window;
+        private WindowApp window;
 
-        public OpenListAccountMenu(AppWindow window) {
+        public OpenListAccountMenu(WindowApp window) {
             this.window = window;
         }
 
@@ -126,11 +126,11 @@ public class CommonListener {
 
 
     public static class OpenAccountOptionMenuList implements ActionListener {
-        private AppWindow window;
+        private WindowApp window;
         private Integer accountNumber;
         private static JPanel panel;
 
-        public OpenAccountOptionMenuList(AppWindow receivedWindow, Integer accountNumber) {
+        public OpenAccountOptionMenuList(WindowApp receivedWindow, Integer accountNumber) {
             this.window = receivedWindow;
             this.accountNumber = accountNumber;
         }
