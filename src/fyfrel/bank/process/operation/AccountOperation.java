@@ -37,22 +37,40 @@ public class AccountOperation {
     }
 
     /**
-     * Make a payment from an Account to another one
+     * IF an Advisor use it the payment is done
+     * IF a Customer use it the payment will be stocked but will only be done when an Advisor will accept it
+     * Make a payment from an account to another
      * @param account any type of Account, the one that make the action
      * @param toWithdraw double, amount to withdraw
      * @param otherAccountNumber any type of Account, the one that will receive
      * @return a Boolean if the operation was done without problem or not
      */
-    public static Boolean payment(Account account, double toWithdraw, int otherAccountNumber) {
-        if(account.canWithdraw(account, toWithdraw)) {
+    public static Boolean payment(Account account, double toWithdraw, int otherAccountNumber, Boolean validated) {
+        if(Account.canWithdraw(account, toWithdraw)) {
             Account otherAccount = Bank.getAllAccountList().get(otherAccountNumber);
-            account.setContent(account.getContent() - toWithdraw);
-            otherAccount.setContent(otherAccount.getContent() + toWithdraw);
-            AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList()[2], toWithdraw, otherAccount);
-            AccountOperation.saveOperation(otherAccount , Bank.getAllTransactionTypeList()[3], toWithdraw, account);
+            if(validated) {
+                account.setContent(account.getContent() - toWithdraw);
+                otherAccount.setContent(otherAccount.getContent() + toWithdraw);
+                AccountOperation.saveOperation(account, Bank.getAllTransactionTypeList()[2], toWithdraw, otherAccount);
+                AccountOperation.saveOperation(otherAccount , Bank.getAllTransactionTypeList()[3], toWithdraw, account);
+            } else {
+                saveOperationToValidate(account, Bank.getAllTransactionTypeList()[2], toWithdraw, otherAccount);
+            }
             return true;
         }
         return false;
+    }
+
+    /**
+     * Method to validate a payment a Customer might have done
+     * @param account any type of Account, the one that make the action
+     * @param toValidate the Transaction to validate
+     * @return if the transaction was done with no trouble
+     */
+    public static Boolean validatePayment(Account account, Transaction toValidate) {
+        Boolean temp =  payment(toValidate.getAccount(), toValidate.getAmount(), toValidate.getOtherAccount().getAccountNumber(), true);
+        account.getWaitingPayment().remove(toValidate);
+        return temp;
     }
 
     /**
@@ -63,7 +81,7 @@ public class AccountOperation {
      * @param amount double, amount involved
      * @param otherAccount any type of Account, the one that will receive
      */
-    public static void saveOperation(Account account, String typeTransaction, double amount, Account otherAccount) {
+    private static void saveOperation(Account account, String typeTransaction, double amount, Account otherAccount) {
         account.getAllTransactions().add(new Transaction(account, typeTransaction, amount, otherAccount));
     }
     /**
@@ -73,7 +91,18 @@ public class AccountOperation {
      * @param typeTransaction String get in Bank->typeTransactions
      * @param amount double, amount involved
      */
-    public static void saveOperation(Account account, String typeTransaction, double amount) {
+    private static void saveOperation(Account account, String typeTransaction, double amount) {
         account.getAllTransactions().add(new Transaction(account, typeTransaction, amount));
+    }
+
+    /**
+     * Used to save a payment that have been done by a Customer that have to wait for the validation of an Advisor
+     * @param account any type of Account, the one that make the action
+     * @param typeTransaction String get in Bank->typeTransactions
+     * @param amount double, amount involved
+     * @param otherAccount any type of Account, the one that will receive
+     */
+    private static void saveOperationToValidate(Account account, String typeTransaction, double amount, Account otherAccount) {
+        account.getWaitingPayment().add(new Transaction(account, typeTransaction, amount, otherAccount));
     }
 }

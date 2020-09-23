@@ -1,7 +1,8 @@
 package fyfrel.bank.datas.clientside.accounts;
 
 import fyfrel.bank.datas.bankside.Bank;
-import fyfrel.bank.datas.clientside.User;
+import fyfrel.bank.datas.clientside.user.Customer;
+import fyfrel.bank.datas.clientside.user.User;
 
 /**
  * An Account that can't get overdraft but get interest "every month"
@@ -22,7 +23,7 @@ public class SavingAccount extends Account {
      * @param amount double, Amount given at the start of the Account
      * @param interest double, by how much percentage the Amount will grow each month
      */
-    public SavingAccount(User owner, double amount, double interest) {
+    public SavingAccount(Customer owner, double amount, double interest) {
         super(owner, "Epargne", amount);
         this.interest = interest;
     }
@@ -32,7 +33,7 @@ public class SavingAccount extends Account {
      * @param owner User, that will be used as the owner
      * @param amount double, Amount given at the start of the Account
      */
-    public SavingAccount(User owner, double amount) {
+    public SavingAccount(Customer owner, double amount) {
         super(owner, "Epargne", amount);
         this.interest = Bank.getDefaultInterest();
     }

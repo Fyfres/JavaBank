@@ -4,6 +4,7 @@ import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.gui.WindowApp;
 import fyfrel.bank.gui.Menu;
 import fyfrel.bank.gui.commonlistener.CommonListener;
+import fyfrel.bank.gui.panels.managementmenu.CustomerListMenu;
 import fyfrel.bank.process.authentication.Authentication;
 
 import javax.swing.*;
@@ -12,8 +13,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Menu to register
+ */
 public class RegisterMenu extends Menu {
 
+    /**
+     * the constructor create all the Menu
+     * @param receivedWindow AppWindow the frame of the App
+     */
     public RegisterMenu(WindowApp receivedWindow) {
         super(receivedWindow, "RegisterMenu");
 
@@ -75,17 +83,31 @@ public class RegisterMenu extends Menu {
         window.getComponentToGetText().get(cardName).add(password);
         card.add(password, c);
 
+
+
+        JCheckBox advisor = new JCheckBox("Cochez si vous créez un compte de Conseiller");
+        c.gridx = 0;
+        c.gridy = 7;
+        c.insets = new Insets(20, 0, 0, 0);
+        window.getComponentToGetText().get(cardName).add(advisor);
+        card.add(advisor, c);
+
+
+
+
+
+
         JButton register = new JButton("Créer un Compte");
         register.addActionListener(new UserCreation());
         c.gridx = 0;
-        c.gridy = 7;
+        c.gridy = 8;
         c.insets = new Insets(100, 0, 0, 0);
         card.add(register, c);
 
         JButton backAuthMenu = new JButton("Retour");
         backAuthMenu.addActionListener(new CommonListener.BackToAuthMenu(window));
         c.gridx = 0;
-        c.gridy = 8;
+        c.gridy = 9;
         c.insets = new Insets(25, 0, 0, 0);
         card.add(backAuthMenu, c);
 
@@ -93,7 +115,10 @@ public class RegisterMenu extends Menu {
     }
 
 
-
+    /**
+     * Listener that send a Customer to it's managing page or send an Advisor to it's Customer List
+     * or send the User an error if it couldn't be registered or connected
+     */
     public class UserCreation implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -101,11 +126,21 @@ public class RegisterMenu extends Menu {
             JTextField firstName = (JTextField) components.get(0);
             JTextField lastName = (JTextField) components.get(1);
             JPasswordField password = (JPasswordField) components.get(2);
-            if(Authentication.register(firstName.getText(), lastName.getText(), password.getText())) {
-                JLabel title = (JLabel) window.getComponentToGetText().get("UserMenu").get(0);
-                title.setText("Bienvenue sur votre page de gestion " + Bank.getManagingUser().getFirstName() + " " + Bank.getManagingUser().getLastname());
-                window.openCard("UserMenu");
-                return;
+            JCheckBox advisor = (JCheckBox) components.get(3);
+
+            if(Authentication.register(firstName.getText(), lastName.getText(), password.getText(), advisor.isSelected())) {
+                if(Bank.getManagingUser().isCustomer()) {
+                    JLabel title = (JLabel) window.getComponentToGetText().get("UserMenu").get(0);
+                    title.setText("Bienvenue sur votre page de gestion " + Bank.getManagingUser().getFirstName() + " " + Bank.getManagingUser().getLastname());
+                    window.openCard("UserMenu");
+                    return;
+                } else if(Bank.getManagingUser().isAdvisor()) {
+                    JPanel listPanel = (JPanel) window.getComponentToGetText().get("CustomerListMenu").get(0);
+                    listPanel.removeAll();
+                    CustomerListMenu.recreateListWhenReady(window);
+                    window.openCard("CustomerListMenu");
+                    return;
+                }
             }
             window.openCard("AlreadyExist");
         }

@@ -3,6 +3,8 @@ package fyfrel.bank.gui.panels.managementmenu;
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.accounts.CurrentAccount;
 import fyfrel.bank.datas.clientside.accounts.SavingAccount;
+import fyfrel.bank.datas.clientside.user.Advisor;
+import fyfrel.bank.datas.clientside.user.Customer;
 import fyfrel.bank.gui.WindowApp;
 import fyfrel.bank.gui.Menu;
 import fyfrel.bank.gui.commonlistener.CommonListener;
@@ -16,13 +18,22 @@ import java.util.ArrayList;
 
 public class NewAccountMenu extends Menu {
 
+    /**
+     * Create the menu original and the one when the connection didn't go well
+     * @param window AppWindow the frame of the App
+     * @return the two Menu
+     */
     public static NewAccountMenu[] createNewAccountMenu(WindowApp window) {
         return new NewAccountMenu[]{new NewAccountMenu(window, Bank.getAccountTypes()[0]), new NewAccountMenu(window, Bank.getAccountTypes()[1])};
     }
 
+    /**
+     *
+     * @param receivedWindow AppWindow the frame of the App
+     * @param name String of the type of account and cardName
+     */
     public NewAccountMenu(WindowApp receivedWindow, String name) {
         super(receivedWindow, name);
-
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -45,7 +56,7 @@ public class NewAccountMenu extends Menu {
         c.insets = new Insets(50, 0, 0, 0);
         this.add(accountTypeLabel, c);
 
-        // !! ADD ANY NEW TYPE OF ACCOUNT HERE !!
+        // TODO !! ADD ANY NEW TYPE OF ACCOUNT HERE !!
         JComboBox accountType = new JComboBox(Bank.getAccountTypes());
         if(cardName.equals(Bank.getAccountTypes()[0])) {
             accountType.setSelectedIndex(0);
@@ -137,10 +148,9 @@ public class NewAccountMenu extends Menu {
     }
 
 
-
-
-
-
+    /**
+     * Listener that create a new account
+     */
     public static class NewAccountCreationEvent implements ActionListener {
 
         private String name;
@@ -161,16 +171,18 @@ public class NewAccountMenu extends Menu {
 
             // !! ADD CREATION OF ACCOUNT FOR ANY NEW TYPE OF ACCOUNT !!
             if(name.equals(Bank.getAccountTypes()[0])) {
-                new CurrentAccount(Bank.getManagingUser(), amount, misc);
+                new CurrentAccount(Bank.getManagingUser().isAdvisor() ? Bank.getManagedCustomer() : (Customer) Bank.getManagingUser(), amount, misc);
             } else if(name.equals(Bank.getAccountTypes()[1])) {
-                new SavingAccount(Bank.getManagingUser(), amount, misc);
+                new SavingAccount(Bank.getManagingUser().isAdvisor() ? Bank.getManagedCustomer() : (Customer) Bank.getManagingUser(), amount, misc);
             }
             window.openCard("UserMenu");
         }
     }
 
 
-
+    /**
+     * listener that change the open menu depending on the select in the Menu
+     */
     public static class AccountTypeSelect implements ActionListener {
 
         private String name;

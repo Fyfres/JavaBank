@@ -8,6 +8,7 @@ import fyfrel.bank.gui.Menu;
 import fyfrel.bank.gui.commonlistener.CommonListener;
 import fyfrel.bank.gui.panels.managementmenu.transactionmenu.DepositMenu;
 import fyfrel.bank.gui.panels.managementmenu.transactionmenu.PaymentMenu;
+import fyfrel.bank.gui.panels.managementmenu.transactionmenu.WaitingPaymentMenu;
 import fyfrel.bank.gui.panels.managementmenu.transactionmenu.WithdrawMenu;
 
 import javax.swing.*;
@@ -15,10 +16,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Menu with each option possible with an Account
+ */
 public class AccountOptionMenu extends Menu {
     private Integer accountNumber;
     private Account account;
 
+    /**
+     * Launch the creation of the menu
+     * @param receivedAccountNumber Integer
+     * @param receivedWindow AppWindow the frame of the App
+     */
     public AccountOptionMenu(Integer receivedAccountNumber, WindowApp receivedWindow) {
         super(receivedWindow, "AccountOptionMenu");
 
@@ -27,6 +36,9 @@ public class AccountOptionMenu extends Menu {
         createAccountOptionMenu();
     }
 
+    /**
+     * create the base of the Menu
+     */
     private void createAccountOptionMenu() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -63,10 +75,23 @@ public class AccountOptionMenu extends Menu {
         bc.insets = new Insets(0,10,0,10);
         buttonPanel.add(openPaymentMenu, bc);
 
+
+
+        if(Bank.getManagingUser().isAdvisor() && !account.getWaitingPayment().isEmpty()) {
+            JButton waitingPaymentMenu = new JButton("Virements en attente");
+            waitingPaymentMenu.addActionListener(new OpenWaitingPaymentMenu(window, account));
+            bc.gridy = 0;
+            bc.gridx = 3;
+            bc.insets = new Insets(0,10,0,10);
+            buttonPanel.add(waitingPaymentMenu, bc);
+        }
+
+
+
         JButton backToAccountListMenu = new JButton("Retour");
         backToAccountListMenu.addActionListener(new CommonListener.OpenListAccountMenu(window));
         bc.gridy = 0;
-        bc.gridx = 3;
+        bc.gridx = 4;
         bc.insets = new Insets(0,10,0,10);
         buttonPanel.add(backToAccountListMenu, bc);
 
@@ -83,13 +108,18 @@ public class AccountOptionMenu extends Menu {
         this.add(scrollTransactions, c);
     }
 
+    /**
+     * Create the list of all transaction done on the Account
+     * @return the JPanel of the list
+     */
     private JPanel createAllTransaction() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        int i = 0;
+        int y = 0;
 
-        for (Transaction transaction : account.getAllTransactions()) {
+        for (int i = account.getAllTransactions().size()-1; i >= 0 ; i--) {
+            Transaction transaction = account.getAllTransactions().get(i);
             JPanel transactionPanel = new JPanel();
             transactionPanel.setLayout(new GridBagLayout());
             GridBagConstraints tc = new GridBagConstraints();
@@ -100,7 +130,7 @@ public class AccountOptionMenu extends Menu {
             tc.insets = new Insets(20,0,20,50);
             transactionPanel.add(type, tc);
 
-            JLabel amount = new JLabel(transaction.getAmount().toString());
+            JLabel amount = new JLabel(transaction.getAmount().toString() + "€");
             tc.gridy = 0;
             tc.gridx = 1;
             tc.insets = new Insets(20,0,20,50);
@@ -108,9 +138,9 @@ public class AccountOptionMenu extends Menu {
 
             c.fill = GridBagConstraints.BOTH;
             c.gridx = 0;
-            c.gridy = i;
+            c.gridy = y;
             c.weightx = 1.0;
-            i++;
+            y++;
             transactionPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.black));
             panel.add(transactionPanel,c);
         }
@@ -118,11 +148,9 @@ public class AccountOptionMenu extends Menu {
     }
 
 
-
-
-
-
-
+    /**
+     * Open the Withdraw Menu
+     */
     public static class OpenWithdrawMenu implements ActionListener {
         private WindowApp window;
         private Account account;
@@ -144,7 +172,9 @@ public class AccountOptionMenu extends Menu {
         }
     }
 
-
+    /**
+     * Open the Deposit Menu
+     */
     public static class OpenDepositMenu implements ActionListener {
         private WindowApp window;
         private Account account;
@@ -167,7 +197,9 @@ public class AccountOptionMenu extends Menu {
         }
     }
 
-
+    /**
+     * Open the Payment Menu
+     */
     public static class OpenPaymentMenu implements ActionListener {
         private WindowApp window;
         private Account account;
@@ -187,6 +219,31 @@ public class AccountOptionMenu extends Menu {
             panel = new PaymentMenu(account, window);
             window.getPanel().add(panel, "PaymentMenu");
             window.openCard("PaymentMenu");
+        }
+    }
+
+    /**
+     * Open the Menu of the list of waiting payment (Advisor only)
+     */
+    public static class OpenWaitingPaymentMenu implements ActionListener {
+        private WindowApp window;
+        private Account account;
+        private static JPanel panel;
+
+        public OpenWaitingPaymentMenu(WindowApp receivedWindow, Account account) {
+            this.window = receivedWindow;
+            this.account = account;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(panel != null) {
+                window.getPanel().remove(panel);
+            }
+
+            panel = new WaitingPaymentMenu(account, window);
+            window.getPanel().add(panel, "WaitingPaymentMenu");
+            window.openCard("WaitingPaymentMenu");
         }
     }
 

@@ -1,5 +1,6 @@
 package fyfrel.bank.gui.panels.managementmenu.transactionmenu;
 
+import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.accounts.Account;
 import fyfrel.bank.gui.WindowApp;
 import fyfrel.bank.gui.Menu;
@@ -13,9 +14,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Menu to make a payment of a certain amount to another Account
+ */
 public class PaymentMenu extends Menu {
     private Account account;
 
+    /**
+     * Constructor used when there is no error to display on the menu
+     * @param account the Account to deposit the amount to
+     * @param window AppWindow the frame of the App
+     */
     public PaymentMenu(Account account, WindowApp window) {
         super(window, "PaymentMenu");
         this.account = account;
@@ -25,6 +34,12 @@ public class PaymentMenu extends Menu {
         createPaymentMenu(error);
     }
 
+    /**
+     * Constructor used when there is an error to display on the menu
+     * @param account the Account to deposit the amount to
+     * @param window AppWindow the frame of the App
+     * @param error if there is an error to display and what to display {Boolean,StringToDisplay}
+     */
     public PaymentMenu(Account account, WindowApp window, ArrayList<Object> error) {
         super(window, "PaymentMenu");
         this.account = account;
@@ -32,6 +47,10 @@ public class PaymentMenu extends Menu {
         createPaymentMenu(error);
     }
 
+    /**
+     * Create the core menu
+     * @param error if there is an error to display and what to display {Boolean,StringToDisplay}
+     */
     protected void createPaymentMenu(ArrayList<Object> error) {
         this.removeAll();
         this.setLayout(new GridBagLayout());
@@ -130,7 +149,10 @@ public class PaymentMenu extends Menu {
     }
 
 
-
+    /**
+     * Save the transaction to be validated if it's the Customer that do it or make the transaction if it's an Advisor and open the Account Option Menu
+     * or if there is a problem during the possible transaction re open this Menu with an error
+     */
     public static class Payment implements ActionListener {
         private WindowApp window;
         private Account account;
@@ -148,7 +170,7 @@ public class PaymentMenu extends Menu {
             JTextField amount = (JTextField) window.getComponentToGetText().get("PaymentMenu").get(0);
             JTextField accountNumber = (JTextField) window.getComponentToGetText().get("PaymentMenu").get(1);
 
-            if(AccountOperation.payment(account, Double.parseDouble(amount.getText()), Integer.parseInt(accountNumber.getText()))) {
+            if(AccountOperation.payment(account, Double.parseDouble(amount.getText()), Integer.parseInt(accountNumber.getText()), Bank.getManagingUser().isAdvisor())) {
                 if(panel != null) {
                     window.getPanel().remove(panel);
                 }

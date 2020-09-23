@@ -4,6 +4,7 @@ import fyfrel.bank.gui.panels.authmenu.AuthMainMenu;
 import fyfrel.bank.gui.panels.authmenu.ConnectionMenu;
 import fyfrel.bank.gui.panels.authmenu.RegisterMenu;
 import fyfrel.bank.gui.panels.managementmenu.AccountListMenu;
+import fyfrel.bank.gui.panels.managementmenu.CustomerListMenu;
 import fyfrel.bank.gui.panels.managementmenu.NewAccountMenu;
 import fyfrel.bank.gui.panels.MainMenu;
 import fyfrel.mylibrary.utility.UScreen;
@@ -13,6 +14,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The class at the base of everything
+ * The window that'll contain everything to show
+ */
 public class WindowApp extends JFrame{
     private JPanel panel = new JPanel(new CardLayout());
     private HashMap<String, ArrayList<Object>> componentToGetText = new HashMap<>();
@@ -38,6 +43,9 @@ public class WindowApp extends JFrame{
     }
 
 
+    /**
+     * Create the base of the app and the Menus that doesn't need precise information
+     */
     public WindowApp() {
         this.setTitle("Ma Banque");
         this.setIconImage(appIcon.getImage());
@@ -51,6 +59,7 @@ public class WindowApp extends JFrame{
         new MainMenu(this);
         NewAccountMenu.createNewAccountMenu(this);
         new AccountListMenu(this);
+        new CustomerListMenu(this);
 
 
         this.add(panel);
@@ -58,6 +67,10 @@ public class WindowApp extends JFrame{
         this.setVisible(true);
     }
 
+    /**
+     * Method to show a card by it's name
+     * @param cardName String the name of the card
+     */
     public void openCard(String cardName) {
         CardLayout cl = (CardLayout)(panel.getLayout());
         cl.show(panel, cardName);

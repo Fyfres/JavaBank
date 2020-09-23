@@ -2,35 +2,31 @@ package fyfrel.bank.datas.clientside.accounts;
 
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.Transaction;
-import fyfrel.bank.datas.clientside.User;
+import fyfrel.bank.datas.clientside.user.Customer;
 import fyfrel.mylibrary.utility.UConsole;
 
 import java.util.ArrayList;
 
 public abstract class Account {
     protected Integer accountNumber;
-    protected User owner;
+    protected Customer owner;
     protected String accountType;
     protected Double content;
+    protected Boolean valid = false;
     protected ArrayList<Transaction> allTransactions = new ArrayList<>();
+    protected ArrayList<Transaction> waitingPayment = new ArrayList<>();
 
     public Integer getAccountNumber() {
         return accountNumber;
     }
-    public void setAccountNumber(Integer accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-    public User getOwner() {
+    public Customer getOwner() {
         return owner;
     }
-    public void setOwner(User owner) {
+    public void setOwner(Customer owner) {
         this.owner = owner;
     }
     public String getAccountType() {
         return accountType;
-    }
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
     }
     public Double getContent() {
         return content;
@@ -41,8 +37,14 @@ public abstract class Account {
     public ArrayList<Transaction> getAllTransactions() {
         return allTransactions;
     }
-    public void setAllTransactions(ArrayList<Transaction> allTransactions) {
-        this.allTransactions = allTransactions;
+    public ArrayList<Transaction> getWaitingPayment() {
+        return waitingPayment;
+    }
+    public Boolean isValid() {
+        return valid;
+    }
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 
     /**
@@ -51,7 +53,7 @@ public abstract class Account {
      * @param accountType String, that is given by the class that extends Account in their own constructor
      * @param content double, Amount given at the start of the Account
      */
-    public Account(User owner, String accountType, double content) {
+    public Account(Customer owner, String accountType, double content) {
         this.owner = owner;
         this.accountType = accountType;
         this.content = content;
@@ -114,4 +116,6 @@ public abstract class Account {
     public Boolean isSaving() {
         return this instanceof SavingAccount;
     }
+
+    public abstract Boolean canWithdraw(double toWithdraw);
 }

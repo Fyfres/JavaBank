@@ -13,9 +13,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Menu to deposit a certain amount to an Account
+ */
 public class DepositMenu extends Menu {
     private Account account;
 
+    /**
+     * Constructor used when there is no error to display on the menu
+     * @param account the Account to deposit the amount to
+     * @param window AppWindow the frame of the App
+     */
     public DepositMenu(Account account, WindowApp window) {
         super(window, "DepositMenu");
         this.account = account;
@@ -24,12 +32,22 @@ public class DepositMenu extends Menu {
         createDepositMenu(error);
     }
 
+    /**
+     * Constructor used when there is an error to display on the menu
+     * @param account the Account to deposit the amount to
+     * @param window AppWindow the frame of the App
+     * @param error if there is an error to display and what to display {Boolean,StringToDisplay}
+     */
     public DepositMenu(Account account, WindowApp window, ArrayList<Object> error) {
         super(window, "DepositMenu");
         this.account = account;
         createDepositMenu(error);
     }
 
+    /**
+     * Create the core menu
+     * @param error if there is an error to display and what to display {Boolean,StringToDisplay}
+     */
     protected void createDepositMenu(ArrayList<Object> error) {
         this.removeAll();
         this.setLayout(new GridBagLayout());
@@ -95,7 +113,10 @@ public class DepositMenu extends Menu {
     }
 
 
-
+    /**
+     * Do the transaction and open the Account Option Menu
+     * or if there is a problem during the transaction re open this Menu with an error
+     */
     public static class Deposit implements ActionListener {
         private WindowApp window;
         private Account account;

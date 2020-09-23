@@ -1,4 +1,4 @@
-package fyfrel.bank.datas.clientside;
+package fyfrel.bank.datas.clientside.user;
 
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.accounts.Account;
@@ -9,17 +9,12 @@ import java.util.ArrayList;
  * Basic User class that can contain multiple Bank Account
  */
 public class User {
+    private static Integer lastId = 0;
+    private Integer id;
     private String firstName;
     private String lastname;
     private String password;
-    private ArrayList<Account> allPersonalAccount = new ArrayList<>();
 
-    public ArrayList<Account> getAllPersonalAccount() {
-        return allPersonalAccount;
-    }
-    public void setAllPersonnalAccount(ArrayList<Account> allPersonnalAccount) {
-        this.allPersonalAccount = allPersonnalAccount;
-    }
     public String getPassword() {
         return password;
     }
@@ -38,6 +33,12 @@ public class User {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      * Constructor that add the new instance to the list of user in Class Bank
@@ -49,6 +50,23 @@ public class User {
         this.firstName = firstName;
         this.lastname = lastname;
         this.password = password;
-        Bank.getAllUserList().add(this);
+        lastId++;
+        this.id = lastId;
+    }
+
+    /**
+     * Test if the User is a Customer
+     * @return a Boolean
+     */
+    public Boolean isCustomer() {
+        return this instanceof Customer;
+    }
+
+    /**
+     * Test if the User is an Advisor
+     * @return a Boolean
+     */
+    public Boolean isAdvisor() {
+        return this instanceof Advisor;
     }
 }

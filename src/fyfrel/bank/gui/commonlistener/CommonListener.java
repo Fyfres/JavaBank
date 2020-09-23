@@ -1,8 +1,11 @@
 package fyfrel.bank.gui.commonlistener;
 
+import fyfrel.bank.datas.bankside.Bank;
+import fyfrel.bank.datas.clientside.Transaction;
 import fyfrel.bank.gui.WindowApp;
 import fyfrel.bank.gui.panels.managementmenu.AccountListMenu;
 import fyfrel.bank.gui.panels.managementmenu.AccountOptionMenu;
+import fyfrel.bank.gui.panels.managementmenu.CustomerListMenu;
 import fyfrel.bank.process.authentication.Authentication;
 import fyfrel.mylibrary.utility.UMath;
 
@@ -14,6 +17,9 @@ import java.awt.event.ActionListener;
 
 public class CommonListener {
 
+    /**
+     * Listener on a TextField that check if the user input a number or a negative number depending on what's needed
+     */
     public static class FieldNumberVerif implements DocumentListener {
         private JTextField field;
         private Boolean negative;
@@ -71,9 +77,9 @@ public class CommonListener {
     }
 
 
-
-
-
+    /**
+     * Listener that open the Authentication Menu
+     */
     public static class BackToAuthMenu implements ActionListener {
         private WindowApp window;
 
@@ -88,6 +94,10 @@ public class CommonListener {
         }
     }
 
+
+    /**
+     * Listener that open the Customer Menu
+     */
     public static class BackToMainMenu implements ActionListener {
         private WindowApp window;
 
@@ -97,16 +107,25 @@ public class CommonListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            window.openCard("UserMenu");
+            changeReturnButtonInMainMenu(window);
+            if(Bank.getManagingUser().isCustomer()) {
+                JLabel title = (JLabel) window.getComponentToGetText().get("UserMenu").get(0);
+                title.setText("Bienvenue votre page de gestion " + Bank.getManagingUser().getFirstName() + " " + Bank.getManagingUser().getLastname());
+                window.openCard("UserMenu");
+                return;
+            } else if(Bank.getManagingUser().isAdvisor()) {
+                JLabel title = (JLabel) window.getComponentToGetText().get("UserMenu").get(0);
+                title.setText("Bienvenue la page de gestion du client " + Bank.getManagedCustomer().getFirstName() + " " + Bank.getManagedCustomer().getLastname());
+                window.openCard("UserMenu");
+                return;
+            }
         }
     }
 
 
-
-
-
-
-
+    /**
+     * Listener that open the list of account of a Customer
+     */
     public static class OpenListAccountMenu implements ActionListener {
         private WindowApp window;
 
@@ -125,6 +144,9 @@ public class CommonListener {
     }
 
 
+    /**
+     * Listener that open the Menu with all the option of an Account
+     */
     public static class OpenAccountOptionMenuList implements ActionListener {
         private WindowApp window;
         private Integer accountNumber;
@@ -134,6 +156,7 @@ public class CommonListener {
             this.window = receivedWindow;
             this.accountNumber = accountNumber;
         }
+
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -145,4 +168,48 @@ public class CommonListener {
             window.openCard("AccountOptionMenu");
         }
     }
+
+
+    /**
+     * Listener that Open the Menu with Customer List
+     */
+    public static class ReturnCustomerList implements ActionListener{
+        private WindowApp window;
+
+        public ReturnCustomerList(WindowApp window) {
+            this.window = window;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JPanel listPanel = (JPanel) window.getComponentToGetText().get("CustomerListMenu").get(0);
+            listPanel.removeAll();
+            CustomerListMenu.recreateListWhenReady(window);
+            window.openCard("CustomerListMenu");
+            return;
+        }
+    }
+
+
+    /**
+     * Methods to change the return button depending on the role of the managing User
+     * @param window WindowApp the frame of the App
+     */
+    public static void changeReturnButtonInMainMenu(WindowApp window) {
+        JButton returnButton = (JButton) window.getComponentToGetText().get("UserMenu").get(1);
+        ActionListener[] ElToRemove = returnButton.getActionListeners();
+        for (ActionListener toRemove: ElToRemove) {
+            returnButton.removeActionListener(toRemove);
+        }
+
+        if(Bank.getManagingUser().isAdvisor()) {
+            returnButton.setText("Retour Liste des clients");
+            returnButton.addActionListener(new ReturnCustomerList(window));
+        } else if(Bank.getManagingUser().isCustomer()) {
+            returnButton.setText("Déconnexion");
+            returnButton.addActionListener(new BackToAuthMenu(window));
+        }
+    }
+
+
 }

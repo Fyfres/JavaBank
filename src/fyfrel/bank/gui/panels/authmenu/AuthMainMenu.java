@@ -8,12 +8,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Menu to choose either to connect or register
+ */
 public class AuthMainMenu extends Menu {
 
+    /**
+     * Create the menu original and the one when the register didn't go well
+     * @param receivedWindow AppWindow the frame of the App
+     * @return the two Menu
+     */
     public static AuthMainMenu[] createAuthMainMenu(WindowApp receivedWindow) {
         return new AuthMainMenu[]{new AuthMainMenu(receivedWindow, false), new AuthMainMenu(receivedWindow, true)};
     }
 
+    /**
+     * Launch the creation of the menu with the corresponding name depending if there is an error to display or not
+     * @param receivedWindow AppWindow the frame of the App
+     * @param error Boolean if there is an error to display or not
+     */
     public AuthMainMenu(WindowApp receivedWindow, Boolean error) {
         super(receivedWindow, "AuthMenu");
 
@@ -35,6 +48,11 @@ public class AuthMainMenu extends Menu {
 
     }
 
+    /**
+     * Create the core of the menu
+     * @param cardName String
+     * @param c GridBagConstraint
+     */
     private void createAuthMenu(String cardName, GridBagConstraints c) {
         JButton login = new JButton("Connexion");
         login.addActionListener(new Connection());
@@ -52,7 +70,9 @@ public class AuthMainMenu extends Menu {
     }
 
 
-
+    /**
+     * Open the connection Menu
+     */
     public class Connection implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -60,6 +80,9 @@ public class AuthMainMenu extends Menu {
         }
     }
 
+    /**
+     * Open the Register Menu
+     */
     public class Register implements ActionListener {
         @Override
         public  void    actionPerformed(ActionEvent e) {

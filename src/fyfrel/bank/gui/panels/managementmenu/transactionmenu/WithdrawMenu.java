@@ -13,9 +13,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Menu to deposit a certain amount to an Account
+ */
 public class WithdrawMenu extends Menu {
     private Account account;
 
+    /**
+     * Constructor used when there is no error to display on the menu
+     * @param account the Account to deposit the amount to
+     * @param window AppWindow the frame of the App
+     */
     public WithdrawMenu(Account account, WindowApp window) {
         super(window, "WithdrawMenu");
         this.account = account;
@@ -25,6 +33,13 @@ public class WithdrawMenu extends Menu {
         createWithdrawMenu(error);
     }
 
+
+    /**
+     * Constructor used when there is an error to display on the menu
+     * @param account the Account to deposit the amount to
+     * @param window AppWindow the frame of the App
+     * @param error if there is an error to display and what to display {Boolean,StringToDisplay}
+     */
     public WithdrawMenu(Account account, WindowApp window, ArrayList<Object> error) {
         super(window, "WithdrawMenu");
         this.account = account;
@@ -32,6 +47,11 @@ public class WithdrawMenu extends Menu {
         createWithdrawMenu(error);
     }
 
+
+    /**
+     * Create the core menu
+     * @param error if there is an error to display and what to display {Boolean,StringToDisplay}
+     */
     protected void createWithdrawMenu(ArrayList<Object> error) {
         this.removeAll();
         this.setLayout(new GridBagLayout());
@@ -97,7 +117,10 @@ public class WithdrawMenu extends Menu {
     }
 
 
-
+    /**
+     * Do the transaction and open the Account Option Menu
+     * or if there is a problem during the transaction re open this Menu with an error
+     */
     public static class Withdraw implements ActionListener {
         private WindowApp window;
         private Account account;
@@ -127,7 +150,7 @@ public class WithdrawMenu extends Menu {
                 ArrayList<Object> temp = new ArrayList<>();
                 temp.add(true);
                 temp.add("Une erreur est survenue lors de la tentative de transaction.\nVeuillez vérifier que le montant saisi ne dépasse le plafond autorisé votre compte.");
-                window.getPanel().add(new DepositMenu(account, window, temp), "WithdrawMenu");
+                window.getPanel().add(new WithdrawMenu(account, window, temp), "WithdrawMenu");
                 window.getPanel().revalidate();
                 window.openCard("WithdrawMenu");
             }

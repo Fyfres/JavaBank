@@ -11,8 +11,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Menu to Manage a Customer
+ */
 public class MainMenu extends Menu {
 
+    /**
+     * Create the Menu
+     * @param receivedWindow AppWindow the frame of the App
+     */
     public MainMenu(WindowApp receivedWindow) {
         super(receivedWindow, "UserMenu");
 
@@ -33,7 +40,7 @@ public class MainMenu extends Menu {
         this.add(title, c);
 
 
-        JButton listAccount = new JButton("Aperçu de mes Comptes");
+        JButton listAccount = new JButton("Pages des Comptes");
         listAccount.addActionListener(new CommonListener.OpenListAccountMenu(window));
         c.gridx = 0;
         c.gridy = 2;
@@ -42,7 +49,7 @@ public class MainMenu extends Menu {
 
 
 
-        JButton newAccount = new JButton("Créer un nouveau Compte");
+        JButton newAccount = new JButton("Ajouter un nouveau Compte");
         newAccount.addActionListener(new OpenNewAccountMenu());
         c.gridx = 1;
         c.gridy = 2;
@@ -50,11 +57,12 @@ public class MainMenu extends Menu {
         this.add(newAccount, c);
 
 
-        JButton backAuthMenu = new JButton("Déconnexion");
+        JButton backAuthMenu = new JButton("Retour");
         backAuthMenu.addActionListener(new CommonListener.BackToAuthMenu(window));
         c.gridx = 2;
         c.gridy = 2;
         c.insets = new Insets(30,0, 0, 0);
+        window.getComponentToGetText().get(cardName).add(backAuthMenu);
         this.add(backAuthMenu, c);
 
 
@@ -62,8 +70,9 @@ public class MainMenu extends Menu {
     }
 
 
-
-
+    /**
+     * Listener to open the Menu to create a new Account
+     */
     public class OpenNewAccountMenu implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
