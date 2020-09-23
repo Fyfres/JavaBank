@@ -80,14 +80,14 @@ public class CustomerListMenu extends Menu {
             JLabel accountTypeLabel = new JLabel("Utilisateur " + customer.getLastname() + " " + customer.getFirstName());
             cc.gridx = 0;
             cc.gridy = 0;
-            cc.insets = new Insets(10, 0, 0, 0);
+            cc.insets = new Insets(10, 0, 0, 10);
             customerPanel.add(accountTypeLabel, cc);
 
             JButton manageCustomer = new JButton("Gérer ce client");
             manageCustomer.addActionListener(new OpenCustomerMenu(window, customer));
             cc.gridx = 1;
             cc.gridy = 0;
-            cc.insets = new Insets(15,0,10,0);
+            cc.insets = new Insets(15,10,10,0);
             customerPanel.add(manageCustomer, cc);
 
             c.gridy = y;

@@ -100,7 +100,7 @@ public class AccountOptionMenu extends Menu {
         c.insets = new Insets(50,0,50,0);
         this.add(buttonPanel, c);
 
-        JScrollPane scrollTransactions = new JScrollPane(createAllTransaction());
+        JPanel scrollTransactions = createAllTransaction();
         c.gridy = 2;
         c.gridx = 0;
         c.insets = new Insets(50,0,20,0);
