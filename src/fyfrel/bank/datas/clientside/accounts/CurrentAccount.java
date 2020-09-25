@@ -51,4 +51,11 @@ public class CurrentAccount extends Account{
         }
         return true;
     }
+
+
+
+    @Override
+    public String getClassName() {
+        return "CurrentAccount";
+    }
 }

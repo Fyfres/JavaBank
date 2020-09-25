@@ -1,10 +1,12 @@
 package fyfrel.bank.datas.bankside;
 
+import fyfrel.bank.database.filemanagment.managment.FileManager;
 import fyfrel.bank.datas.clientside.user.Advisor;
 import fyfrel.bank.datas.clientside.user.Customer;
 import fyfrel.bank.datas.clientside.user.User;
 import fyfrel.bank.datas.clientside.accounts.Account;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,9 +15,10 @@ public class Bank {
     private static ArrayList<Customer> allCustomerList = new ArrayList<>();
     private static ArrayList<Advisor> allAdvisorList = new ArrayList<>();
     private static HashMap<Integer, Account> allAccountList = new HashMap<>();
-    private static final String[] allTransactionTypeList = {"Retrait", "Versement", "Virement", "Versement Externe"};
     private static User managingUser;
     private static Customer managedCustomer;
+
+    private static final String[] ALL_TRANSACTION_TYPE = {"Retrait", "Versement", "Virement", "Versement Externe"};
 
     // !! IF YOU CREATE ANY NEW TYPE OF ACCOUNT ADD THEM HERE !!
     private static final String[] ACCOUNT_TYPES = {"Courant", "Epargne"};
@@ -32,7 +35,7 @@ public class Bank {
         return ACCOUNT_TYPES;
     }
     public static String[] getAllTransactionTypeList() {
-        return allTransactionTypeList;
+        return ALL_TRANSACTION_TYPE;
     }
     public static double getDefaultInterest() {
         return DEFAULT_INTEREST;
@@ -88,5 +91,34 @@ public class Bank {
     }
     public static void setManagedCustomer(Customer managedCustomer) {
         Bank.managedCustomer = managedCustomer;
+    }
+
+
+    public static void init() {
+        ArrayList<Object> oCustomer = FileManager.readAllDatas("Customer");
+        ArrayList<Object> oAdvisor = FileManager.readAllDatas("Advisor");
+        ArrayList<Object> oAccount = FileManager.readAllDatas("Account");
+
+        oCustomer.forEach(customer -> allCustomerList.add((Customer)customer));
+        oAdvisor.forEach(advisor -> allAdvisorList.add((Advisor)advisor));
+        oAccount.forEach((account) -> {
+            Account accountToPut = (Account) account;
+            allAccountList.put(accountToPut.getAccountNumber(), accountToPut);
+        });
+    }
+
+    public static void saveDatas() {
+        ArrayList<Object> arrC = new ArrayList<>();
+        allCustomerList.forEach(customer -> arrC.add((Object) customer));
+        FileManager.writeAllDatas(arrC, "Customer");
+
+        ArrayList<Object> arrA = new ArrayList<>();
+        allAdvisorList.forEach(advisor -> arrA.add((Object) advisor));
+        FileManager.writeAllDatas(arrA, "Advisor");
+
+        ArrayList<Object> arrAcc = new ArrayList<>();
+
+        allAccountList.forEach((k,v) -> arrAcc.add((Object) v));
+        FileManager.writeAllDatas(arrAcc, "Account");
     }
 }

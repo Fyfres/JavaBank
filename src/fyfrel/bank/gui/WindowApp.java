@@ -1,5 +1,6 @@
 package fyfrel.bank.gui;
 
+import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.gui.panels.authmenu.AuthMainMenu;
 import fyfrel.bank.gui.panels.authmenu.ConnectionMenu;
 import fyfrel.bank.gui.panels.authmenu.RegisterMenu;
@@ -11,6 +12,8 @@ import fyfrel.mylibrary.utility.UScreen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,6 +53,13 @@ public class WindowApp extends JFrame{
         this.setTitle("Ma Banque");
         this.setIconImage(appIcon.getImage());
         this.setSize(UScreen.getScreenSize()[0], UScreen.getScreenSize()[1]);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                Bank.saveDatas();
+            }
+        });
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 

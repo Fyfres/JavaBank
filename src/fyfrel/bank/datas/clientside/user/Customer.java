@@ -21,4 +21,9 @@ public class Customer extends User{
         Bank.getAllCustomerList().add(this);
         Bank.getAdvisorWithLeastCustomer().getAllPersonalCustomer().add(this);
     }
+
+    @Override
+    public String getClassName() {
+        return "Customer";
+    }
 }

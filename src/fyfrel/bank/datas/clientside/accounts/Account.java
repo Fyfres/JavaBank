@@ -118,4 +118,10 @@ public abstract class Account {
     }
 
     public abstract Boolean canWithdraw(double toWithdraw);
+
+
+
+    public String getClassName() {
+        return "Account";
+    }
 }

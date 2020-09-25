@@ -61,4 +61,8 @@ public class Transaction {
         this.transactionType = transactionType;
         this.amount = amount;
     }
+
+    public String getClassName() {
+        return "Transaction";
+    }
 }
