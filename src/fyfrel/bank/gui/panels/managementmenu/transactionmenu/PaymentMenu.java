@@ -181,7 +181,7 @@ public class PaymentMenu extends Menu {
                 window.remove(currPanel);
                 ArrayList<Object> temp = new ArrayList<>();
                 temp.add(true);
-                temp.add("Une erreur est survenue lors de la tentative de transaction.\nVeuillez vérifier le numéro de compte, si celui-ci est correct vérifier que le montant saisi ne dépasse le plafond autorisé votre compte.");
+                temp.add("Une erreur est survenue lors de la tentative de transaction.\nVeuillez vérifier le numéro de compte (et que ce n'est pas le compte sur lequel vous êtes), si celui-ci est correct vérifier que le montant saisi ne dépasse le plafond autorisé votre compte.");
                 window.getPanel().add(new PaymentMenu(account, window, temp), "PaymentMenu");
                 window.getPanel().revalidate();
                 window.openCard("PaymentMenu");

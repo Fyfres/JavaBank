@@ -3,6 +3,7 @@ package fyfrel.bank.gui.panels.managementmenu;
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.Transaction;
 import fyfrel.bank.datas.clientside.accounts.Account;
+import fyfrel.bank.datas.clientside.accounts.SavingAccount;
 import fyfrel.bank.gui.WindowApp;
 import fyfrel.bank.gui.Menu;
 import fyfrel.bank.gui.commonlistener.CommonListener;
@@ -77,13 +78,25 @@ public class AccountOptionMenu extends Menu {
 
 
 
-        if(Bank.getManagingUser().isAdvisor() && !account.getWaitingPayment().isEmpty()) {
-            JButton waitingPaymentMenu = new JButton("Virements en attente");
-            waitingPaymentMenu.addActionListener(new OpenWaitingPaymentMenu(window, account));
-            bc.gridy = 0;
-            bc.gridx = 3;
-            bc.insets = new Insets(0,10,0,10);
-            buttonPanel.add(waitingPaymentMenu, bc);
+        if(Bank.getManagingUser().isAdvisor()) {
+            if(!account.getWaitingPayment().isEmpty()) {
+                JButton waitingPaymentMenu = new JButton("Virements en attente");
+                waitingPaymentMenu.addActionListener(new OpenWaitingPaymentMenu(window, account));
+                bc.gridy = 0;
+                bc.gridx = 3;
+                bc.insets = new Insets(0,10,0,10);
+                buttonPanel.add(waitingPaymentMenu, bc);
+            }
+
+
+            if(account.isSaving()) {
+                JButton addInterest = new JButton("Ajouter les intérêts");
+                addInterest.addActionListener(new AddInterest(account));
+                bc.gridy = 0;
+                bc.gridx = 4;
+                bc.insets = new Insets(0,10,0,10);
+                buttonPanel.add(addInterest, bc);
+            }
         }
 
 
@@ -91,7 +104,7 @@ public class AccountOptionMenu extends Menu {
         JButton backToAccountListMenu = new JButton("Retour");
         backToAccountListMenu.addActionListener(new CommonListener.OpenListAccountMenu(window));
         bc.gridy = 0;
-        bc.gridx = 4;
+        bc.gridx = 5;
         bc.insets = new Insets(0,10,0,10);
         buttonPanel.add(backToAccountListMenu, bc);
 
@@ -247,5 +260,23 @@ public class AccountOptionMenu extends Menu {
         }
     }
 
+
+    /**
+     * listener that add the percentage of interest declared in the instance
+     */
+    public static class AddInterest implements ActionListener {
+        private Account account;
+
+        public AddInterest(Account account) {
+            this.account = account;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(account.isSaving()) {
+                ((SavingAccount) account).addInterest();
+            }
+        }
+    }
 
 }

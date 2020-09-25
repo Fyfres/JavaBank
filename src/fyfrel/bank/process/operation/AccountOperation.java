@@ -46,7 +46,7 @@ public class AccountOperation {
      * @return a Boolean if the operation was done without problem or not
      */
     public static Boolean payment(Account account, double toWithdraw, int otherAccountNumber, Boolean validated) {
-        if(Account.canWithdraw(account, toWithdraw)) {
+        if(account.getAccountNumber() != otherAccountNumber && Account.canWithdraw(account, toWithdraw)) {
             Account otherAccount = Bank.getAllAccountList().get(otherAccountNumber);
             if(validated) {
                 account.setContent(account.getContent() - toWithdraw);

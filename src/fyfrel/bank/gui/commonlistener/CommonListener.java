@@ -7,6 +7,7 @@ import fyfrel.bank.gui.panels.managementmenu.AccountListMenu;
 import fyfrel.bank.gui.panels.managementmenu.AccountOptionMenu;
 import fyfrel.bank.gui.panels.managementmenu.CustomerListMenu;
 import fyfrel.bank.process.authentication.Authentication;
+import fyfrel.mylibrary.utility.UConsole;
 import fyfrel.mylibrary.utility.UMath;
 
 import javax.swing.*;
@@ -39,8 +40,7 @@ public class CommonListener {
 
         @Override
         public void insertUpdate(DocumentEvent e) {
-            JTextField amount = (JTextField) window.getComponentToGetText().get(cardName).get(index);
-            fieldNumberVerif(amount, false);
+            fieldNumberVerif();
         }
 
         @Override
@@ -50,11 +50,11 @@ public class CommonListener {
 
         @Override
         public void changedUpdate(DocumentEvent e) {
-            JTextField amount = (JTextField) window.getComponentToGetText().get(cardName).get(index);
-            fieldNumberVerif(amount, false);
+            fieldNumberVerif();
         }
 
-        public void fieldNumberVerif(JTextField field, Boolean negative) {
+        public void fieldNumberVerif() {
+
             SwingUtilities.invokeLater(() -> {
                 if(!UMath.testStringToDouble(field.getText())
                         || field.getText().substring(field.getText().length() - 1).equals("f")
@@ -63,11 +63,16 @@ public class CommonListener {
                         || field.getText().substring(field.getText().length() - 1).equals("D")
                 ) {
                     if(negative) {
-                        if(field.getText().substring(0).equals("-") && field.getText().length() <= 1){
+                        if(field.getText().substring(0).equals("-") && field.getText().length() <= 1) {
+                            return;
+                        } else {
+                            field.setText("-0");
                             return;
                         }
+                    } else {
+                        field.setText("0");
+                        return;
                     }
-                    field.setText("0");
                 }
                 if(negative && Double.parseDouble(field.getText()) > 0){
                     field.setText("0");

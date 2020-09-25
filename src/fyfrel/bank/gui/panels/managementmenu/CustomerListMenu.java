@@ -93,7 +93,7 @@ public class CustomerListMenu extends Menu {
             c.gridy = y;
             c.gridx = 0;
             c.insets = new Insets(10,0,10,0);
-            listPanel.add(customerPanel);
+            listPanel.add(customerPanel, c);
             y++;
         }
     }

@@ -106,7 +106,7 @@ public class NewAccountMenu extends Menu {
             c.gridy = 3;
             c.insets = new Insets(20, 0, 0, 0);
             window.getComponentToGetText().get(cardName).add(overdraft);
-            overdraft.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, 1, true));
+            overdraft.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, overdraft, 1, true));
             this.add(overdraft, c);
 
 
@@ -124,7 +124,7 @@ public class NewAccountMenu extends Menu {
             c.gridy = 3;
             c.insets = new Insets(20, 0, 0, 0);
             window.getComponentToGetText().get(cardName).add(interest);
-            interest.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, amount, 1, false));
+            interest.getDocument().addDocumentListener(new CommonListener.FieldNumberVerif(window, cardName, interest, 1, false));
             this.add(interest, c);
         }
 
