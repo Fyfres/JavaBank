@@ -7,11 +7,12 @@ I started learning Java 3 weeks before finishing the "V3"
   
 How to use abstract class and methods  
 How to use implements  
-How to use Swing (at least a little)  
-And the rest wasn't really "learning", it was really basic since i already had bases of Object Oriented Programation  
+How to use Swing (at least a little)    
+How to save datas in files  
+How to use JDBC (not in this repo because it wasn't fully implemented i just made some testing)  
+Learned a bit about how to use Threads  
 
 ## Was it cool to do 
 
 At first i liked it but i had to add things again and again while learning some things so i don't like how it look, now with how i see things this project seems really bad.
 At least i learned and that's what's important.
-I think i'll look into Maven and Spring after this or i don't know maybe i'll have another project for my formation really quickly.
