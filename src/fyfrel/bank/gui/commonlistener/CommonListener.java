@@ -221,10 +221,10 @@ public class CommonListener {
         }
     }
 
-    public static void emptyFields(JTextField component){
-        component.setText("");
-    }
-
+    /**
+     * Reset all fields and checkboxes on the current JPanel
+     * @param window WindowApp the frame of the App
+     */
     public static void emptyAllFieldsOfActivePanel(WindowApp window) {
         for(Component comp : window.getPanel().getComponents()) {
             if(comp.isVisible()){
@@ -249,12 +249,18 @@ public class CommonListener {
         }
     }
 
+
+    public static void emptyFields(JTextField component){
+        component.setText("");
+    }
     public static void emptyFields(JPasswordField component){
         component.setText("");
     }
     public static void emptyFields(JFormattedTextField component){
         component.setText("");
     }
-
+    public static void emptyFields(JCheckBox component){
+        component.setSelected(false);
+    }
 
 }
