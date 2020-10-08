@@ -2,12 +2,11 @@ package fyfrel.bank.datas.clientside.accounts;
 
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.user.Customer;
-import fyfrel.bank.datas.clientside.user.User;
 
 /**
  * An Account that can get Overdraft
  */
-public class CurrentAccount extends Account{
+public class CurrentAccount extends Account {
     private double overdraft;
 
     public double getOverdraft() {

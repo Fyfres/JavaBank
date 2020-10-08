@@ -169,6 +169,11 @@ public class NewAccountMenu extends Menu {
             double amount = Double.parseDouble(amountTF.getText());
             double misc = Double.parseDouble(miscTF.getText());
 
+            CommonListener.emptyFields((JTextField) window.getComponentToGetText().get(Bank.getAccountTypes()[0]).get(1));
+            CommonListener.emptyFields((JTextField) window.getComponentToGetText().get(Bank.getAccountTypes()[0]).get(2));
+            CommonListener.emptyFields((JTextField) window.getComponentToGetText().get(Bank.getAccountTypes()[1]).get(1));
+            CommonListener.emptyFields((JTextField) window.getComponentToGetText().get(Bank.getAccountTypes()[1]).get(2));
+
             // !! ADD CREATION OF ACCOUNT FOR ANY NEW TYPE OF ACCOUNT !!
             if(name.equals(Bank.getAccountTypes()[0])) {
                 new CurrentAccount(Bank.getManagingUser().isAdvisor() ? Bank.getManagedCustomer() : (Customer) Bank.getManagingUser(), amount, misc);

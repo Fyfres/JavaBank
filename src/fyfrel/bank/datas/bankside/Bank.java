@@ -6,7 +6,6 @@ import fyfrel.bank.datas.clientside.user.Customer;
 import fyfrel.bank.datas.clientside.user.User;
 import fyfrel.bank.datas.clientside.accounts.Account;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 

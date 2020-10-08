@@ -5,9 +5,10 @@ import fyfrel.bank.datas.clientside.Transaction;
 import fyfrel.bank.datas.clientside.user.Customer;
 import fyfrel.mylibrary.utility.UConsole;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Account {
+public abstract class Account implements Serializable {
     protected Integer accountNumber;
     protected Customer owner;
     protected String accountType;

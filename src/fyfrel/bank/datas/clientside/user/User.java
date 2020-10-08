@@ -1,10 +1,6 @@
 package fyfrel.bank.datas.clientside.user;
 
-import fyfrel.bank.datas.bankside.Bank;
-import fyfrel.bank.datas.clientside.accounts.Account;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Basic User class that can contain multiple Bank Account

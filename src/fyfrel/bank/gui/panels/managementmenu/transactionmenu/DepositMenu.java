@@ -133,6 +133,7 @@ public class DepositMenu extends Menu {
         public void actionPerformed(ActionEvent e) {
 
             JTextField amount = (JTextField) window.getComponentToGetText().get("DepositMenu").get(0);
+            CommonListener.emptyAllFieldsOfActivePanel(window);
 
             if(AccountOperation.deposit(account, Double.parseDouble(amount.getText()))) {
                 if(panel != null) {

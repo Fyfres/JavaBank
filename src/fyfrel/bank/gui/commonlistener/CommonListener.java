@@ -13,6 +13,7 @@ import fyfrel.mylibrary.utility.UMath;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -54,7 +55,6 @@ public class CommonListener {
         }
 
         public void fieldNumberVerif() {
-
             SwingUtilities.invokeLater(() -> {
                 if(!UMath.testStringToDouble(field.getText())
                         || field.getText().substring(field.getText().length() - 1).equals("f")
@@ -94,6 +94,7 @@ public class CommonListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            emptyAllFieldsOfActivePanel(this.window);
             Authentication.disconnect();
             window.openCard("AuthMenu");
         }
@@ -112,6 +113,7 @@ public class CommonListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            emptyAllFieldsOfActivePanel(this.window);
             changeReturnButtonInMainMenu(window);
             if(Bank.getManagingUser().isCustomer()) {
                 JLabel title = (JLabel) window.getComponentToGetText().get("UserMenu").get(0);
@@ -140,6 +142,7 @@ public class CommonListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            emptyAllFieldsOfActivePanel(this.window);
             JPanel listPanel = (JPanel) window.getComponentToGetText().get("AccountListMenu").get(0);
             listPanel.removeAll();
             AccountListMenu.recreateListWhenReady(listPanel, window);
@@ -168,6 +171,7 @@ public class CommonListener {
             if(panel != null) {
                 window.getPanel().remove(panel);
             }
+            emptyAllFieldsOfActivePanel(this.window);
             panel = new AccountOptionMenu(accountNumber, window);
             window.getPanel().add(panel, "AccountOptionMenu");
             window.openCard("AccountOptionMenu");
@@ -187,6 +191,7 @@ public class CommonListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            emptyAllFieldsOfActivePanel(this.window);
             JPanel listPanel = (JPanel) window.getComponentToGetText().get("CustomerListMenu").get(0);
             listPanel.removeAll();
             CustomerListMenu.recreateListWhenReady(window);
@@ -214,6 +219,41 @@ public class CommonListener {
             returnButton.setText("Déconnexion");
             returnButton.addActionListener(new BackToAuthMenu(window));
         }
+    }
+
+    public static void emptyFields(JTextField component){
+        component.setText("");
+    }
+
+    public static void emptyAllFieldsOfActivePanel(WindowApp window) {
+        for(Component comp : window.getPanel().getComponents()) {
+            if(comp.isVisible()){
+                for(Component components : ((JPanel) comp).getComponents()) {
+                    boolean good = false;
+                    try {
+                        JTextField jTextField = (JTextField) components;
+                        jTextField.setText("");
+                        good = true;
+                    } catch(Exception e) {}
+
+                    if(good){continue;}
+
+                    try {
+                        JCheckBox jCheckBox = (JCheckBox) components;
+                        assert jCheckBox != null;
+                        jCheckBox.setSelected(false);
+                    } catch(ClassCastException e) {}
+                }
+                break;
+            }
+        }
+    }
+
+    public static void emptyFields(JPasswordField component){
+        component.setText("");
+    }
+    public static void emptyFields(JFormattedTextField component){
+        component.setText("");
     }
 
 

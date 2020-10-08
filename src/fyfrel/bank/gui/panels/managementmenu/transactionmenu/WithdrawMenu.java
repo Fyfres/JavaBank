@@ -138,6 +138,8 @@ public class WithdrawMenu extends Menu {
 
             JTextField amount = (JTextField) window.getComponentToGetText().get("WithdrawMenu").get(0);
 
+            CommonListener.emptyAllFieldsOfActivePanel(window);
+
             if(AccountOperation.withdraw(account, Double.parseDouble(amount.getText()))) {
                 if(panel != null) {
                     window.getPanel().remove(panel);

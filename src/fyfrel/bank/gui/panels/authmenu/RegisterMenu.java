@@ -128,6 +128,8 @@ public class RegisterMenu extends Menu {
             JPasswordField password = (JPasswordField) components.get(2);
             JCheckBox advisor = (JCheckBox) components.get(3);
 
+            CommonListener.emptyAllFieldsOfActivePanel(window);
+
             if(Authentication.register(firstName.getText(), lastName.getText(), password.getText(), advisor.isSelected())) {
                 if(Bank.getManagingUser().isCustomer()) {
                     JLabel title = (JLabel) window.getComponentToGetText().get("UserMenu").get(0);

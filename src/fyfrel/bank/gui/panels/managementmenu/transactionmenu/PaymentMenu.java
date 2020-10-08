@@ -170,6 +170,8 @@ public class PaymentMenu extends Menu {
             JTextField amount = (JTextField) window.getComponentToGetText().get("PaymentMenu").get(0);
             JTextField accountNumber = (JTextField) window.getComponentToGetText().get("PaymentMenu").get(1);
 
+            CommonListener.emptyAllFieldsOfActivePanel(window);
+
             if(AccountOperation.payment(account, Double.parseDouble(amount.getText()), Integer.parseInt(accountNumber.getText()), Bank.getManagingUser().isAdvisor())) {
                 if(panel != null) {
                     window.getPanel().remove(panel);

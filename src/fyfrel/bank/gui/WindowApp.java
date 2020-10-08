@@ -45,7 +45,6 @@ public class WindowApp extends JFrame{
         this.appIcon = appIcon;
     }
 
-
     /**
      * Create the base of the app and the Menus that doesn't need precise information
      */
