@@ -105,6 +105,7 @@ public class WaitingPaymentMenu  extends Menu {
         public void actionPerformed(ActionEvent e) {
             AccountOperation.validatePayment(account, transaction);
             window.getPanel().add(new WaitingPaymentMenu(account, window) , "WaitingPaymentMenu");
+            CommonListener.emptyAllFieldsOfActivePanel(window);
             window.openCard("WaitingPaymentMenu");
         }
     }

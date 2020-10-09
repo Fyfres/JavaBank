@@ -63,9 +63,9 @@ public class Bank {
         Bank.allAdvisorList = allUserList;
     }
     public static Advisor getAdvisorWithLeastCustomer() {
-        Advisor advisorToReturn = Bank.getAllAdvisorList().get(0);
+        Advisor advisorToReturn = null;
         for(Advisor advisor : Bank.getAllAdvisorList()){
-            if(advisorToReturn.getAllPersonalCustomer().size() > advisor.getAllPersonalCustomer().size()) {
+            if(advisorToReturn == null || (advisorToReturn.getAllPersonalCustomer().size() > advisor.getAllPersonalCustomer().size())) {
                 advisorToReturn = advisor;
             }
         }
@@ -96,7 +96,8 @@ public class Bank {
     public static void init() {
         ArrayList<Object> oCustomer = FileManager.readAllDatas("Customer");
         ArrayList<Object> oAdvisor = FileManager.readAllDatas("Advisor");
-        ArrayList<Object> oAccount = FileManager.readAllDatas("Account");
+        ArrayList<Object> oAccount = FileManager.readAllDatas("SavingAccount");
+        oAccount.addAll(FileManager.readAllDatas("CurrentAccount"));
 
         oCustomer.forEach(customer -> allCustomerList.add((Customer)customer));
         oAdvisor.forEach(advisor -> allAdvisorList.add((Advisor)advisor));
@@ -115,9 +116,18 @@ public class Bank {
         allAdvisorList.forEach(advisor -> arrA.add((Object) advisor));
         FileManager.writeAllDatas(arrA, "Advisor");
 
-        ArrayList<Object> arrAcc = new ArrayList<>();
+        ArrayList<Object> arrAccSav = new ArrayList<>();
+        ArrayList<Object> arrAccCurr = new ArrayList<>();
 
-        allAccountList.forEach((k,v) -> arrAcc.add((Object) v));
-        FileManager.writeAllDatas(arrAcc, "Account");
+        allAccountList.forEach((k,v) -> {
+            if(v.isSaving()){
+                arrAccSav.add(v);
+            } else if(v.isCurrent()){
+                arrAccCurr.add(v);
+            }
+        });
+
+        FileManager.writeAllDatas(arrAccSav, "SavingAccount");
+        FileManager.writeAllDatas(arrAccCurr, "CurrentAccount");
     }
 }

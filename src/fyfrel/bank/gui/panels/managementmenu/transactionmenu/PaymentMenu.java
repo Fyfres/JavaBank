@@ -170,14 +170,13 @@ public class PaymentMenu extends Menu {
             JTextField amount = (JTextField) window.getComponentToGetText().get("PaymentMenu").get(0);
             JTextField accountNumber = (JTextField) window.getComponentToGetText().get("PaymentMenu").get(1);
 
-            CommonListener.emptyAllFieldsOfActivePanel(window);
-
             if(AccountOperation.payment(account, Double.parseDouble(amount.getText()), Integer.parseInt(accountNumber.getText()), Bank.getManagingUser().isAdvisor())) {
                 if(panel != null) {
                     window.getPanel().remove(panel);
                 }
                 panel = new AccountOptionMenu(account.getAccountNumber(), window);
                 window.getPanel().add(panel, "AccountOptionMenu");
+                CommonListener.emptyAllFieldsOfActivePanel(window);
                 window.openCard("AccountOptionMenu");
             } else {
                 window.remove(currPanel);
@@ -185,6 +184,7 @@ public class PaymentMenu extends Menu {
                 temp.add(true);
                 temp.add("Une erreur est survenue lors de la tentative de transaction.\nVeuillez vérifier le numéro de compte (et que ce n'est pas le compte sur lequel vous êtes), si celui-ci est correct vérifier que le montant saisi ne dépasse le plafond autorisé votre compte.");
                 window.getPanel().add(new PaymentMenu(account, window, temp), "PaymentMenu");
+                CommonListener.emptyAllFieldsOfActivePanel(window);
                 window.getPanel().revalidate();
                 window.openCard("PaymentMenu");
             }

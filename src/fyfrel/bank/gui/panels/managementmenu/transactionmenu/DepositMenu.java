@@ -133,7 +133,6 @@ public class DepositMenu extends Menu {
         public void actionPerformed(ActionEvent e) {
 
             JTextField amount = (JTextField) window.getComponentToGetText().get("DepositMenu").get(0);
-            CommonListener.emptyAllFieldsOfActivePanel(window);
 
             if(AccountOperation.deposit(account, Double.parseDouble(amount.getText()))) {
                 if(panel != null) {
@@ -141,6 +140,7 @@ public class DepositMenu extends Menu {
                 }
                 panel = new AccountOptionMenu(account.getAccountNumber(), window);
                 window.getPanel().add(panel, "AccountOptionMenu");
+                CommonListener.emptyAllFieldsOfActivePanel(window);
                 window.openCard("AccountOptionMenu");
             } else {
                 window.remove(currPanel);
@@ -148,6 +148,7 @@ public class DepositMenu extends Menu {
                 temp.add(true);
                 temp.add("Une erreur est survenue lors de la tentative de transaction.");
                 window.getPanel().add(new DepositMenu(account, window, temp), "DepositMenu");
+                CommonListener.emptyAllFieldsOfActivePanel(window);
                 window.getPanel().revalidate();
                 window.openCard("DepositMenu");
             }

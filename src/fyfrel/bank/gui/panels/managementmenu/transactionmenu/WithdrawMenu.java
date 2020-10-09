@@ -138,14 +138,13 @@ public class WithdrawMenu extends Menu {
 
             JTextField amount = (JTextField) window.getComponentToGetText().get("WithdrawMenu").get(0);
 
-            CommonListener.emptyAllFieldsOfActivePanel(window);
-
             if(AccountOperation.withdraw(account, Double.parseDouble(amount.getText()))) {
                 if(panel != null) {
                     window.getPanel().remove(panel);
                 }
                 panel = new AccountOptionMenu(account.getAccountNumber(), window);
                 window.getPanel().add(panel, "AccountOptionMenu");
+                CommonListener.emptyAllFieldsOfActivePanel(window);
                 window.openCard("AccountOptionMenu");
             } else {
                 window.remove(currPanel);
@@ -153,6 +152,7 @@ public class WithdrawMenu extends Menu {
                 temp.add(true);
                 temp.add("Une erreur est survenue lors de la tentative de transaction.\nVeuillez vérifier que le montant saisi ne dépasse le plafond autorisé votre compte.");
                 window.getPanel().add(new WithdrawMenu(account, window, temp), "WithdrawMenu");
+                CommonListener.emptyAllFieldsOfActivePanel(window);
                 window.getPanel().revalidate();
                 window.openCard("WithdrawMenu");
             }

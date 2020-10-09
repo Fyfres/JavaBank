@@ -1,6 +1,5 @@
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.gui.WindowApp;
-import fyfrel.mylibrary.utility.UConsole;
 
 public class Index {
     /**

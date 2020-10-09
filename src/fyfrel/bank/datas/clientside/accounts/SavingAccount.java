@@ -2,11 +2,14 @@ package fyfrel.bank.datas.clientside.accounts;
 
 import fyfrel.bank.datas.bankside.Bank;
 import fyfrel.bank.datas.clientside.user.Customer;
+import fyfrel.bank.datas.clientside.user.User;
+
+import java.io.Serializable;
 
 /**
  * An Account that can't get overdraft but get interest "every month"
  */
-public class SavingAccount extends Account {
+public class SavingAccount extends Account implements Serializable {
     private double interest;
 
     public double getInterest() {

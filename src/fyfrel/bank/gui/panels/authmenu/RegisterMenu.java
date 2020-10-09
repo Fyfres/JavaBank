@@ -128,22 +128,23 @@ public class RegisterMenu extends Menu {
             JPasswordField password = (JPasswordField) components.get(2);
             JCheckBox advisor = (JCheckBox) components.get(3);
 
-            CommonListener.emptyAllFieldsOfActivePanel(window);
-
             if(Authentication.register(firstName.getText(), lastName.getText(), password.getText(), advisor.isSelected())) {
                 if(Bank.getManagingUser().isCustomer()) {
                     JLabel title = (JLabel) window.getComponentToGetText().get("UserMenu").get(0);
                     title.setText("Bienvenue sur votre page de gestion " + Bank.getManagingUser().getFirstName() + " " + Bank.getManagingUser().getLastname());
+                    CommonListener.emptyAllFieldsOfActivePanel(window);
                     window.openCard("UserMenu");
                     return;
                 } else if(Bank.getManagingUser().isAdvisor()) {
                     JPanel listPanel = (JPanel) window.getComponentToGetText().get("CustomerListMenu").get(0);
                     listPanel.removeAll();
                     CustomerListMenu.recreateListWhenReady(window);
+                    CommonListener.emptyAllFieldsOfActivePanel(window);
                     window.openCard("CustomerListMenu");
                     return;
                 }
             }
+            CommonListener.emptyAllFieldsOfActivePanel(window);
             window.openCard("AlreadyExist");
         }
     }
